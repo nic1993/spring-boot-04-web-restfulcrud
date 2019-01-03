@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+		<link href="asserts/css/style.css" th:href="@{/asserts/css/style.css}"  rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{../index.html}">HOME</a>
+			<!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="/" th:href="@{../login.html}">Sign in</a>
+				</li>
+			</ul>
+		</nav>
+
+		</div><div class="g-doc">
+			<div class="n-show f-cb" id="showContent">
+				<div class="img"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" th:src="${goods.getLocation()}" alt="" ></div>
+				<div class="cnt">
+					<h2>SICP</h2>
+					<p class="summary" th:text="${goods.getGoodsname()}">测试书籍</p>
+					<div class="price">
+						<span class="v-unit">¥</span><span class="v-value" th:text="${goods.getPrice()}">120.88</span>
+					</div>
+					<div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum"></span><span id="addNum" class="moreNum"><a>+</a></span></div>
+					<div class="oprt f-cb">
+					</div>
+				</div>
+			</div>
+			<div class="m-tab m-tab-fw m-tab-simple f-cb">
+				<h2>详细信息</h2>
+			</div>
+			<div class="n-detail" th:text="${goods.getSellername()}">
+				好书
+			</div>
+		</div>
+
+
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
+		<script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
+		<script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
+		<script>
+			feather.replace()
+		</script>
+
+		<!-- Graphs -->
+		<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
+
+	</body>
+
+</html>

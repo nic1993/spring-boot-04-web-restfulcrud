@@ -18,9 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
 
-
-
-
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //浏览器发送atguiguqingqiu，也来到success页面

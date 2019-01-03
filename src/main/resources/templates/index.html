@@ -10,9 +10,9 @@
 		<title>Dashboard Template for Bootstrap</title>
 		<!-- Bootstrap core CSS -->
 		<link href="asserts/css/bootstrap.min.css" rel="stylesheet">
-		<link href="asserts/css/style.css"  th:href="@{/asserts/css/style.css}"  rel="stylesheet">
+		<link href="asserts/css/style.css" th:href="@{/asserts/css/style.css}"  rel="stylesheet">
 		<!-- Custom styles for this template -->
-		<link href="asserts/css/dashboard.css" rel="stylesheet">
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
 		<style type="text/css">
 			/* Chart.js */
 			
@@ -44,7 +44,7 @@
 	<body>
 
 		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
-			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">HOME</a>
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{index.html}">HOME</a>
 			<!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
 			<ul class="navbar-nav px-3">
 				<li class="nav-item text-nowrap">
@@ -53,59 +53,17 @@
 			</ul>
 		</nav>
 
-
-
 		<div class="g-doc">
 			<div class="m-tab m-tab-fw m-tab-simple f-cb">
 				<div class="tab">
 					<ul>
 						<li class="z-sel" ><a href="/">所有内容</a></li>
-
 					</ul>
 				</div>
 			</div>
 			<div class="n-plist">
 				<ul class="f-cb" id="plist">
-					<li id="p-1">
-						<a href="/show?id=1" class="link">
-							<div class="img"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" alt="SICP"></div>
-							<h3>SICP</h3>
-							<div class="price"><span class="v-unit">¥</span><span class="v-value">120.88</span></div>
 
-
-						</a>
-
-					</li>
-					<li id="p-2">
-						<a href="/show?id=2" class="link">
-							<div class="img"><img src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiVv7CI8MTfAhUNY48KHTDPArwQjRx6BAgBEAU&url=http%3A%2F%2Fblog.renren.com%2Fshare%2F242925209%2F2162088380&psig=AOvVaw0od2X0urviIw48tm-akKEw&ust=1546167266272643" alt="测试"></div>
-							<h3>测试</h3>
-							<div class="price"><span class="v-unit">¥</span><span class="v-value">1</span></div>
-
-
-						</a>
-
-					</li>
-					<li id="p-3">
-						<a href="/show?id=3" class="link">
-							<div class="img"><img src="https://unsplash.com/photos/mIt-LCP5paA" alt="权健保健品"></div>
-							<h3>权健保健品</h3>
-							<div class="price"><span class="v-unit">¥</span><span class="v-value">100000</span></div>
-
-
-						</a>
-
-					</li>
-					<li id="p-4">
-						<a href="/show?id=4" class="link">
-							<div class="img"><img src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiVv7CI8MTfAhUNY48KHTDPArwQjRx6BAgBEAU&url=http%3A%2F%2Fblog.renren.com%2Fshare%2F242925209%2F2162088380&psig=AOvVaw0od2X0urviIw48tm-akKEw&ust=1546167266272643" alt="aa"></div>
-							<h3>aa</h3>
-							<div class="price"><span class="v-unit">¥</span><span class="v-value">12</span></div>
-
-
-						</a>
-
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -114,7 +72,7 @@
 		<!-- Bootstrap core JavaScript
     ================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" ></script>
+		<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}"  src="" ></script>
 		<script type="text/javascript" src="asserts/js/popper.min.js" ></script>
 		<script type="text/javascript" src="asserts/js/bootstrap.min.js" ></script>
 
@@ -126,36 +84,36 @@
 
 		<!-- Graphs -->
 		<script type="text/javascript" src="asserts/js/Chart.min.js" ></script>
-		<script>
-			var ctx = document.getElementById("myChart");
-			var myChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-					datasets: [{
-						data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-						lineTension: 0,
-						backgroundColor: 'transparent',
-						borderColor: '#007bff',
-						borderWidth: 4,
-						pointBackgroundColor: '#007bff'
-					}]
-				},
-				options: {
-					scales: {
-						yAxes: [{
-							ticks: {
-								beginAtZero: false
-							}
-						}]
-					},
-					legend: {
-						display: false,
-					}
-				}
-			});
-		</script>
 
+		<script type="text/javascript">
+
+            $(document).ready(function () {
+                $.ajax({
+                    url:'goods',
+                    type:'GET',
+					datatype:'JSON',
+                    success:function(data){
+
+                        var arr = data.allgoods;
+
+
+                        for(var i = 0;i < arr.length;i++){
+                            var id = "/NTES/info/" + arr[i].id;
+                            $("#plist").append('<li id="p-4">\n' +
+                                '<a href='+id+' class=\"link\">\n' +
+                                "<div class=\"img\"><img src=\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg\" alt=\"SICP\"></div>\n" +
+                                "<h3>"+arr[i].lastName+"</h3>\n" +
+                                "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
+                                "</a></li>")
+						}
+                    },
+                    error:function(err){
+                        alert('发生了错误：'+err.status);
+                        console.log(err);
+                    }
+                });
+            })
+		</script>
 	</body>
 
 </html>

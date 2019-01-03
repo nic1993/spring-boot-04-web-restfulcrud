@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class EmployeeController {
@@ -20,6 +22,8 @@ public class EmployeeController {
 
     @Autowired
     DepartmentDao departmentDao;
+
+
     @GetMapping("/emps")
     public  String list(Model model){
         Collection<Employee> employees = employeeDao.getAll();
@@ -27,7 +31,21 @@ public class EmployeeController {
         //放在请求域中
         model.addAttribute("emps",employees);
         //thymeleaf 默认就会拼串
+
+        System.out.println("========");
         return  "emp/list";
+    }
+
+    @ResponseBody
+    @GetMapping("/test")
+    public Map<String,Object> test(){
+        Collection<Employee> employees = employeeDao.getAll();
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("emp",employees);
+
+        return  map;
     }
 
     @GetMapping("/emp")

@@ -12,7 +12,6 @@ import java.util.Map;
 @Controller
 public class HelloController {
 
-
     @ResponseBody
     @RequestMapping("/hello")
     public  String hello(@RequestParam("user") String user){
@@ -25,8 +24,11 @@ public class HelloController {
 
     @RequestMapping("/success")
     public  String success(Map<String,Object> map){
+
+        System.out.println("===========");
+
         map.put("hello","你好");
         map.put("users", Arrays .asList("zhangsan","lisi","wangwu"));
-        return  "success";
+        return  "index";
     }
 }
