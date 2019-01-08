@@ -13,26 +13,63 @@
 	</head>
 
 	<body class="text-center">
-		<form class="form-signin" action="dashboard.html" th:action="@{/user/login}" method="post">
+		<form class="form-signin" id="loginform"  method="post" >
 			<img class="mb-4" th:src="@{/asserts/img/bootstrap-solid.svg}" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">
 			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
-			<p  style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+			<p  style="color: red" id="errormsg" ></p>
 			<label class="sr-only" th:text="#{login.username}">Username</label>
-			<input type="text" name="username" class="form-control" placeholder="Username" required="123" autofocus="" >
+			<input type="text" name="username" class="form-control" id="nameInput" placeholder="Username" required="" autofocus="" >
 			<label class="sr-only" th:text="#{login.password}">Password</label>
-			<input type="password" name="password" class="form-control" placeholder="Password" required="">
+			<input type="password" name="password" class="form-control" id="pwdInput" placeholder="Password" required="">
 			<div class="checkbox mb-3">
 				<label>
-          <input type="checkbox" value="remember-me" > [[#{login.remember}]]
-        </label>
+            <input type="checkbox" value="remember-me" > [[#{login.remember}]]
+			</label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.buyerbtn}">Sign in</button>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.sellerbtn}">Sign in</button>
+
+			<button class="btn btn-lg btn-primary btn-block" id="buyerbtn" type="submit" th:text="#{login.buyerbtn}">Sign in</button>
 			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
 			<a class="btn btn-sm" th:href="@{/login.html(l='zh_CN')}">中文</a>
 			<a class="btn btn-sm" th:href="@{/login.html(l='en_US')}">English</a>
 		</form>
-
+		<button class="btn btn-lg btn-primary btn-block" id="sellerbtn" th:attr="seller_uri=@{/goods}" th:text="#{login.sellerbtn}">Sign in</button>
 	</body>
+	<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
+
+	<script type="text/javascript">
+        $("#sellerbtn").click(function () {
+            $.ajax({
+				url:'seller/login',
+                type:'POST',
+                datatype:'JSON',
+                data:{
+                    username:$('#nameInput').val(),
+                    password:$('#pwdInput').val(),
+                },
+				success:function (data) {
+				    if(data.seller != null){
+                        sessionStorage.setItem('seller',data.seller);
+                        window.location.href="/NTES/seller/home.html";
+					} else if(data.loginStatusCode==3){
+                        $("#errormsg").html("用户名不存在！");
+					}else {
+                        $("#errormsg").html("密码错误！");
+					}
+                },
+                error:function(err){
+                    alert('发生了错误：'+err.status);
+                    console.log(err);
+                }
+			});
+        });
+
+        $("#buyerbtn").click(function () {
+
+            $("#loginform").attr("action","/NTES/user/login").submit();
+
+            return false;
+        });
+	</script>
+
 
 </html>

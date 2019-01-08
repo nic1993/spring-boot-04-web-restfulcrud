@@ -1,18 +1,12 @@
 package com.atguigu.springboot04webrestfulcrud.config;
 
-import com.atguigu.springboot04webrestfulcrud.component.LoginHandlerInterceptor;
 import com.atguigu.springboot04webrestfulcrud.component.MyLocaleResolver;
 
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -30,8 +24,9 @@ public class MyMvcConfig implements WebMvcConfigurer {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
                 registry.addViewController("/").setViewName("index");
-                registry.addViewController("/login.html").setViewName("login");
+                registry.addViewController("/login").setViewName("login");
                 registry.addViewController("/main.html").setViewName("dashboard");
+                registry.addViewController("/seller/home.html").setViewName("/seller/home");
             }
 
             //注册拦截器

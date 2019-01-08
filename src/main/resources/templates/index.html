@@ -44,11 +44,11 @@
 	<body>
 
 		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
-			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{index.html}">HOME</a>
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{/}">HOME</a>
 			<!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
 			<ul class="navbar-nav px-3">
 				<li class="nav-item text-nowrap">
-					<a class="nav-link" href="/" th:href="@{login.html}">Sign in</a>
+					<a class="nav-link" href="/" th:href="@{login}">Sign in</a>
 				</li>
 			</ul>
 		</nav>
@@ -93,15 +93,13 @@
                     type:'GET',
 					datatype:'JSON',
                     success:function(data){
-
                         var arr = data.allgoods;
-
-
                         for(var i = 0;i < arr.length;i++){
                             var id = "/NTES/info/" + arr[i].id;
+                            var loc = arr[i].location;
                             $("#plist").append('<li id="p-4">\n' +
                                 '<a href='+id+' class=\"link\">\n' +
-                                "<div class=\"img\"><img src=\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg\" alt=\"SICP\"></div>\n" +
+                                "<div class=\"img\"><img src='+loc+'  alt=\"SICP\"></div>\n" +
                                 "<h3>"+arr[i].lastName+"</h3>\n" +
                                 "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
                                 "</a></li>")

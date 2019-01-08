@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,18 +32,23 @@ public class GoodsController {
     @ResponseBody
     @GetMapping("/goods/{name}")
     public Map<String,Object> getGoodsBySeller(@PathVariable("name") String name){
-        List<Goods> allGoods = goodService.getGoodsBySeller(name);
+        List<Goods> allGoods = goodService.getGoodsBySeller("seller");
         Map<String,Object> map = new HashMap<>();
         map.put("allgoods",allGoods);
         return map;
     }
 
     @GetMapping("/info/{id}")
-    public String getGoodsById(@PathVariable("id") Integer id,Model model){
-        System.out.println("===========");
-
+    public String getGoodsById(@PathVariable("id") Integer id, Model model, HttpSession session){
         Goods goods = goodService.getGoodsById(id);
         model.addAttribute("goods",goods);
-        return "info/detail";
+        if(session.getAttribute("sellerUser") != null){
+            return "info/sellerdetail";
+        }else if(session.getAttribute("buyerUser") != null){
+            return "info/buyerdetail";
+        }else{
+            return "info/detail";
+        }
+
     }
 }
