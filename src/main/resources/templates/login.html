@@ -26,13 +26,14 @@
             <input type="checkbox" value="remember-me" > [[#{login.remember}]]
 			</label>
 			</div>
-
 			<button class="btn btn-lg btn-primary btn-block" id="buyerbtn" type="submit" th:text="#{login.buyerbtn}">Sign in</button>
+			<button class="btn btn-lg btn-primary btn-block" id="sellerbtn" type="button" th:attr="seller_uri=@{/goods}" th:text="#{login.sellerbtn}">Sign in</button>
 			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
 			<a class="btn btn-sm" th:href="@{/login.html(l='zh_CN')}">中文</a>
 			<a class="btn btn-sm" th:href="@{/login.html(l='en_US')}">English</a>
 		</form>
-		<button class="btn btn-lg btn-primary btn-block" id="sellerbtn" th:attr="seller_uri=@{/goods}" th:text="#{login.sellerbtn}">Sign in</button>
+
+
 	</body>
 	<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
 

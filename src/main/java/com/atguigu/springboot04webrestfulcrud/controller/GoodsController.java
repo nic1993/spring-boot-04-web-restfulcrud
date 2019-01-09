@@ -49,6 +49,10 @@ public class GoodsController {
         }else{
             return "info/detail";
         }
+    }
+
+
+    public String updateGoodsById(){
 
     }
 }

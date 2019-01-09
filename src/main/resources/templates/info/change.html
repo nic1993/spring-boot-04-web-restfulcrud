@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="asserts/css/style.css" th:href="@{/asserts/css/style.css}"  rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="commons/sellerbar::topbar(activeUri='/info/sellerdetail.html')"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/sellerbar::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="g-doc">
+                <div class="m-tab m-tab-fw m-tab-simple f-cb">
+                    <h2>内容编辑</h2>
+                </div>
+                <div class="n-public">
+                    <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=1" onsubmit="return false;" autocomplete="off">
+                        <div class="fmitem">
+                            <label class="fmlab">标题：</label>
+                            <div class="fmipt">
+                                <input type="hidden" name="id" value="1"/>
+                                <input class="u-ipt ipt" name="title" value="SICP" placeholder="2-80字符"/>
+                            </div>
+                        </div>
+                        <div class="fmitem">
+                            <label class="fmlab">摘要：</label>
+                            <div class="fmipt">
+                                <input class="u-ipt ipt" name="summary" value="测试书籍" placeholder="2-140字符"／>
+                            </div>
+                        </div>
+                        <div class="fmitem">
+                            <label class="fmlab">图片：</label>
+                            <div class="fmipt" id="uploadType">
+                                <input name="pic" type="radio" value="url" checked /> 图片地址
+                                <input name="pic" type="radio" value="file" /> 本地上传
+                            </div>
+                        </div>
+                        <div class="fmitem">
+                            <label class="fmlab"></label>
+                            <div class="fmipt" id="urlUpload">
+                                <input class="u-ipt ipt"  name="image" placeholder="图片地址"/>
+                            </div>
+                            <div class="fmipt" id="fileUpload"  style="display:none">
+                                <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
+                                <button class="u-btn u-btn-primary" id="upload">上传</button>
+                            </div>
+                        </div>
+                        <div class="fmitem">
+                            <label class="fmlab">正文：</label>
+                            <div class="fmipt">
+                                <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符">好书</textarea>
+                            </div>
+                        </div>
+                        <div class="fmitem">
+                            <label class="fmlab">价格：</label>
+                            <div class="fmipt">
+                                <input class="u-ipt price" name="price" value="120"/>元
+                            </div>
+                        </div>
+                        <div class="fmitem fmitem-nolab fmitem-btn">
+                            <div class="fmipt">
+                                <button type="submit" class="u-btn u-btn-primary u-btn-lg">保 存</button>
+                            </div>
+                        </div>
+                    </form>
+                    <span class="imgpre"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" alt="" id="imgpre"></span>
+                </div>
+        </main>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
+<script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
+<script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
+
+<!-- Icons -->
+<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
+
+<!--<script type="text/javascript">-->
+
+<!--$(document).ready(function () {-->
+<!--alert("1111");-->
+<!--});-->
+<!--</script>-->
+
+</body>
+
+</html>

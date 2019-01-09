@@ -42,7 +42,7 @@
 	</head>
 
 	<body>
-	<div th:replace="commons/sellerbar::topbar"></div>
+	<div th:replace="commons/sellerbar::topbar(activeUri='/info/sellerdetail.html')"></div>
 		<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">-->
 			<!--<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{../}">HOME</a>-->
 			<!--&lt;!&ndash;<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;-->
@@ -52,31 +52,37 @@
 				<!--</li>-->
 			<!--</ul>-->
 		<!--</nav>-->
+	<div class="container-fluid">
+		<div class="row">
+			<div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
 
-		</div><div class="g-doc">
-			<div class="n-show f-cb" id="showContent">
-				<div class="img"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" th:src="${goods.getLocation()}" alt="" ></div>
-				<div class="cnt">
-					<h2>SICP</h2>
-					<p class="summary" th:text="${goods.getGoodsname()}">测试书籍</p>
-					<div class="price">
-						<span class="v-unit">¥</span><span class="v-value" th:text="${goods.getPrice()}">120.88</span>
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div class="g-doc">
+					<div class="n-show f-cb" id="showContent">
+						<div class="img"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" th:src="${goods.getLocation()}" alt="" ></div>
+						<div class="cnt">
+							<h2>SICP</h2>
+							<p class="summary" th:text="${goods.getGoodsname()}">测试书籍</p>
+							<div class="price">
+								<span class="v-unit">¥</span><span class="v-value" th:text="${goods.getPrice()}">120.88</span>
+							</div>
+							<div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum"></span><span id="addNum" class="moreNum"><a>+</a></span></div>
+							<div class="oprt f-cb">
+								<a href="/edit?id=1" th:href="@{/edit?} + ${goods.id}" class="u-btn u-btn-primary">编 辑</a>
+							</div>
+						</div>
 					</div>
-					<div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum"></span><span id="addNum" class="moreNum"><a>+</a></span></div>
-					<div class="oprt f-cb">
+					<div class="m-tab m-tab-fw m-tab-simple f-cb">
+						<h2>详细信息</h2>
+					</div>
+					<div class="n-detail" th:text="${goods.getSellername()}">
+						好书
 					</div>
 				</div>
-			</div>
-			<div class="m-tab m-tab-fw m-tab-simple f-cb">
-				<h2>详细信息</h2>
-			</div>
-			<div class="n-detail" th:text="${goods.getSellername()}">
-				好书
-			</div>
+			</main>
 		</div>
+	</div>
 
-
-		</div>
 
 		<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -93,6 +99,13 @@
 
 		<!-- Graphs -->
 		<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
+
+	<!--<script type="text/javascript">-->
+
+        <!--$(document).ready(function () {-->
+            <!--alert("1111");-->
+            <!--});-->
+	<!--</script>-->
 
 	</body>
 

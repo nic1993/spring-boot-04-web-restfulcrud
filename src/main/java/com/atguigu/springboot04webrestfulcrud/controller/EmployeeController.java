@@ -31,8 +31,6 @@ public class EmployeeController {
         //放在请求域中
         model.addAttribute("emps",employees);
         //thymeleaf 默认就会拼串
-
-        System.out.println("========");
         return  "emp/list";
     }
 
