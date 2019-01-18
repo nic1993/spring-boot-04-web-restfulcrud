@@ -21,7 +21,11 @@ public class GoodService {
        return  goodsDao.getGoodsBySeller(sellername);
     }
 
-    public  Goods getGoodsById(Integer id){
+    public Goods getGoodsById(Integer id){
         return  goodsDao.getGoodsById(id);
     }
+
+    public void updateGoodsById(Goods goods){goodsDao.updateGoodsById(goods);}
+
+    public void addGoods(Goods goods){goodsDao.addGoods(goods);}
 }

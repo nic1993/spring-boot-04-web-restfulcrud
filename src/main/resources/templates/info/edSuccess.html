@@ -42,31 +42,31 @@
 </head>
 
 <body>
-<div th:replace="commons/sellerbar::topbar"></div>
-
+<div th:replace="commons/sellerbar::topbar(activeUri='/info/sellerdetail.html')"></div>
+<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">-->
+<!--<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{../}">HOME</a>-->
+<!--&lt;!&ndash;<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;-->
+<!--<ul class="navbar-nav px-3">-->
+<!--<li class="nav-item text-nowrap">-->
+<!--<a class="nav-link" href="/" th:href="@{../login}">Sign in</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</nav>-->
 <div class="container-fluid">
     <div class="row">
         <div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="sellerhome">
-            <div class="g-doc">
-                <div class="m-tab m-tab-fw m-tab-simple f-cb">
-                    <div class="tab">
-                        <ul>
-                            <li class="z-sel" ><a href="/">所有内容</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="n-plist">
-                    <ul class="f-cb" id="plist">
-
-                    </ul>
-                </div>
-            </div>
-
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            </div><div class="g-doc">
+              <div class="n-result">
+              <h3>编辑成功！</h3>
+             <p><a href="/show?id=1">[查看内容]</a></p>
+    </div>
+</div>
         </main>
     </div>
 </div>
+
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -81,38 +81,15 @@
     feather.replace()
 </script>
 
+<!-- Graphs -->
+<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">-->
 
-    $(document).ready(function () {
-
-
-        $.ajax({
-            url:'../goods/seller',
-            type:'GET',
-            datatype:'JSON',
-            success:function(data){
-                var arr = data.allgoods;
-                for(var i = 0;i < arr.length;i++){
-                    var id = "/NTES/info/" + arr[i].id;
-                    var num = arr[i].sellnums;
-                    var loc = arr[i].location;
-                    $("#plist").append('<li id="p-4">\n' +
-                        '<a href='+id+' class=\"link\">\n' +
-                        "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
-                        "<h3>"+arr[i].lastName+"</h3>\n" +
-                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
-                        "<span class=\"had\"><b>已售出" +num + "件</b></span>\n"+
-                        "</a></li>")
-                }
-            },
-            error:function(err){
-                alert('发生了错误：'+err.status);
-                console.log(err);
-            }
-        });
-    })
-</script>
+<!--$(document).ready(function () {-->
+<!--alert("1111");-->
+<!--});-->
+<!--</script>-->
 
 </body>
 

@@ -1,12 +1,14 @@
 package com.atguigu.springboot04webrestfulcrud.entities;
 
 public class Goods {
-    private Integer id;
+    private  Integer id;
     private  String sellername;
     private  String goodsname;
+    private  String summary;
     private  Integer price;
     private  Integer sellnums;
     private  String location;
+    private  String info;
 
     public Integer getId() {
         return id;
@@ -32,6 +34,14 @@ public class Goods {
         this.goodsname = goodsname;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
     public Integer getPrice() {
         return price;
     }
@@ -54,5 +64,13 @@ public class Goods {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

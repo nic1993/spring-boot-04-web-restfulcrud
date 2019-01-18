@@ -25,4 +25,8 @@ public class GoodsDao {
        return goodsMapper.getGoodsById(id);
     }
 
+    public  void updateGoodsById(Goods goods){goodsMapper.updateGoods(goods);}
+
+    public void addGoods(Goods goods){goodsMapper.addGoods(goods);}
+
 }

@@ -42,11 +42,11 @@
 </head>
 
 <body>
-<div th:replace="commons/sellerbar::topbar(activeUri='/info/sellerdetail.html')"></div>
+<div th:replace="commons/sellerbar::topbar"></div>
 
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="commons/sellerbar::#sidebar"></div>
+        <div th:replace="commons/sellerbar::#sidebar(activeUri=${goods==null?'/add':'/info/sellerdetail.html'})"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="g-doc">
@@ -54,57 +54,60 @@
                     <h2>内容编辑</h2>
                 </div>
                 <div class="n-public">
-                    <form class="m-form m-form-ht" id="form" method="post" action="/editSubmit?id=1" onsubmit="return false;" autocomplete="off">
+                    <form class="m-form m-form-ht" id="form" method="post" th:action="${activeUri=='/add'? '/NTES/add': '/NTES/edit'}" action="/NTES/edit"  autocomplete="off" enctype="multipart/form-data">
+                        <input type="hidden" name="_method" value="put" th:if="${goods!=null}">
+                        <input type="hidden" name="id"  id="goodsid" th:value="${goods.id}" th:if="${goods!=null}">
                         <div class="fmitem">
                             <label class="fmlab">标题：</label>
                             <div class="fmipt">
                                 <input type="hidden" name="id" value="1"/>
-                                <input class="u-ipt ipt" name="title" value="SICP" placeholder="2-80字符"/>
+                                <input class="u-ipt ipt" name="goodsname" id="goodsname" value="" th:value="${goods!=null}?${goods.goodsname}" placeholder="2-80字符"/>
                             </div>
                         </div>
                         <div class="fmitem">
                             <label class="fmlab">摘要：</label>
                             <div class="fmipt">
-                                <input class="u-ipt ipt" name="summary" value="测试书籍" placeholder="2-140字符"／>
+                                <input class="u-ipt ipt" name="summary" id="summary" value="" th:value="${goods!=null}?${goods.summary}" placeholder="2-140字符"／>
                             </div>
                         </div>
                         <div class="fmitem">
                             <label class="fmlab">图片：</label>
                             <div class="fmipt" id="uploadType">
-                                <input name="pic" type="radio" value="url" checked /> 图片地址
-                                <input name="pic" type="radio" value="file" /> 本地上传
+                                <input name="pic" type="radio" value="url"   class="radioItem"/> 图片地址
+                                <input name="pic" type="radio" value="file" class="radioItem" checked/> 本地上传
                             </div>
                         </div>
                         <div class="fmitem">
                             <label class="fmlab"></label>
-                            <div class="fmipt" id="urlUpload">
-                                <input class="u-ipt ipt"  name="image" placeholder="图片地址"/>
+                            <div class="fmipt" id="urlUpload" style="display:none">
+                                <input class="u-ipt ipt"  name="location" id="location" placeholder="图片地址"/>
                             </div>
-                            <div class="fmipt" id="fileUpload"  style="display:none">
+                            <div class="fmipt" id="fileUpload"  >
                                 <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
-                                <button class="u-btn u-btn-primary" id="upload">上传</button>
+                                <button class="u-btn u-btn-primary" id="upload" type="button">上传</button>
                             </div>
                         </div>
                         <div class="fmitem">
                             <label class="fmlab">正文：</label>
                             <div class="fmipt">
-                                <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符">好书</textarea>
+                                <textarea class="u-ipt" name="info" rows="10" id="goodsinfo" th:text="${goods!=null}?${goods.info}" placeholder="2-1000个字符">好书</textarea>
                             </div>
                         </div>
                         <div class="fmitem">
                             <label class="fmlab">价格：</label>
                             <div class="fmipt">
-                                <input class="u-ipt price" name="price" value="120"/>元
+                                <input class="u-ipt price" name="price" id="goodsprice" value="" th:value="${goods!=null}?${goods.price}"/>元
                             </div>
                         </div>
                         <div class="fmitem fmitem-nolab fmitem-btn">
                             <div class="fmipt">
-                                <button type="submit" class="u-btn u-btn-primary u-btn-lg">保 存</button>
+                                <button type="button" class="u-btn u-btn-primary u-btn-lg" id="savebtn" th:text="${activeUri=='/add'? '发布' : '保存'}" >保 存</button>
                             </div>
                         </div>
                     </form>
-                    <span class="imgpre"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1138464224,1601768176&fm=26&gp=0.jpg" alt="" id="imgpre"></span>
+                    <span class="imgpre"><img src="" th:src="${loc}" alt="" id="imgpre"></span>
                 </div>
+            </div>
         </main>
     </div>
 </div>
@@ -114,6 +117,8 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
+<!--<script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>-->
+<!--<script type="text/javascript"  th:src="@{/asserts/js/pageShow.js}" ></script>-->
 <script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
 
@@ -126,12 +131,71 @@
 <!-- Graphs -->
 <script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
 
-<!--<script type="text/javascript">-->
+<script type="text/javascript">
 
-<!--$(document).ready(function () {-->
-<!--alert("1111");-->
-<!--});-->
-<!--</script>-->
+
+    $(".radioItem").change(
+        function() {
+            var value = $("input[name='pic']:checked").val();
+            if (value == "file") {
+                $("#urlUpload").hide();
+                $("#fileUpload").show();
+            } else {
+                $("#urlUpload").show();
+                $("#fileUpload").hide();
+            }
+        });
+
+    $("#upload").click(function () {
+        var file = $("#fileUp").get(0).files[0];
+        var formData = new FormData();
+        formData.append("file",file);
+        $.ajax({
+            url:'/NTES/edit',
+            type:'POST',
+            data:formData,
+            datatype:'JSON',
+            processData:false,
+            contentType: false,
+            success:function(data){
+                alert(data.imgpath)
+                   $("#imgpre").attr("src",data.imgpath);
+            }
+        });
+    })
+
+    $("#savebtn").click(function () {
+        var location = $("#imgpre")[0].src;
+        alert(location);
+
+        var id = $("#goodsid").val();;
+        var goodsname = $("#goodsname").val();
+        var summary = $("#summary").val();
+        var info = $("#goodsinfo").val();
+        var price = $("#price").val();
+
+        $.ajax({
+            url:'/NTES/edit',
+            type:'POST',
+            data:{
+                id:$("#goodsid").val(),
+                location:$("#imgpre")[0].src,
+                goodsname: $("#goodsname").val(),
+                summary: $("#summary").val(),
+                info: $("#goodsinfo").val(),
+                price: $("#goodsprice").val(),
+                _method:"PUT",
+            },
+        success:function(data){
+
+
+        }
+        })
+
+    })
+
+
+</script>
 
 </body>
 
