@@ -54,7 +54,7 @@
                     <h2>内容编辑</h2>
                 </div>
                 <div class="n-public">
-                    <form class="m-form m-form-ht" id="form" method="post" th:action="${activeUri=='/add'? '/NTES/add': '/NTES/edit'}" action="/NTES/edit"  autocomplete="off" enctype="multipart/form-data">
+                    <form class="m-form m-form-ht" id="form" method="post"  action=""  autocomplete="off"  >
                         <input type="hidden" name="_method" value="put" th:if="${goods!=null}">
                         <input type="hidden" name="id"  id="goodsid" th:value="${goods.id}" th:if="${goods!=null}">
                         <div class="fmitem">
@@ -101,7 +101,7 @@
                         </div>
                         <div class="fmitem fmitem-nolab fmitem-btn">
                             <div class="fmipt">
-                                <button type="button" class="u-btn u-btn-primary u-btn-lg" id="savebtn" th:text="${activeUri=='/add'? '发布' : '保存'}" >保 存</button>
+                                <button type="button" class="u-btn u-btn-primary u-btn-lg" id="savebtn" th:text="${goods!=null? '保存' : '发布'}" >保 存</button>
                             </div>
                         </div>
                     </form>
@@ -132,8 +132,6 @@
 <script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
 
 <script type="text/javascript">
-
-
     $(".radioItem").change(
         function() {
             var value = $("input[name='pic']:checked").val();
@@ -165,32 +163,69 @@
     })
 
     $("#savebtn").click(function () {
-        var location = $("#imgpre")[0].src;
-        alert(location);
-
-        var id = $("#goodsid").val();;
-        var goodsname = $("#goodsname").val();
-        var summary = $("#summary").val();
-        var info = $("#goodsinfo").val();
-        var price = $("#price").val();
-
-        $.ajax({
-            url:'/NTES/edit',
-            type:'POST',
-            data:{
-                id:$("#goodsid").val(),
-                location:$("#imgpre")[0].src,
-                goodsname: $("#goodsname").val(),
-                summary: $("#summary").val(),
-                info: $("#goodsinfo").val(),
-                price: $("#goodsprice").val(),
-                _method:"PUT",
-            },
-        success:function(data){
-
-
+        var value = $("input[name='pic']:checked").val();
+        var location;
+        if (value == "file") {
+            location = $("#imgpre")[0].src;
+        }else {
+            location = $("#location").val();
         }
-        })
+
+
+        var text = $("#savebtn").text();
+        if(text == '保存'){
+            var id = $("#goodsid").val();;
+            var goodsname = $("#goodsname").val();
+            var summary = $("#summary").val();
+            var info = $("#goodsinfo").val();
+            var price = $("#price").val();
+            $.ajax({
+                url:'/NTES/edit',
+                type:'POST',
+                data:{
+                    id:$("#goodsid").val(),
+                    location:location,
+                    goodsname: $("#goodsname").val(),
+                    summary: $("#summary").val(),
+                    info: $("#goodsinfo").val(),
+                    price: $("#goodsprice").val(),
+                    _method:"PUT",
+                },
+                success:function(data){
+                    // window.location.href="/NTES/info/edSuccess.html";
+                    localStorage.setItem("id",id);
+                    var url = "/NTES/success";
+                    $("#form").attr("action",url).submit();
+                }
+            })
+        }else {
+            var goodsname = $("#goodsname").val();
+            var summary = $("#summary").val();
+            var info = $("#goodsinfo").val();
+            var price = $("#price").val();
+            $.ajax({
+                url:'/NTES/add',
+                type:'POST',
+                data:{
+                    location:location,
+                    goodsname: $("#goodsname").val(),
+                    summary: $("#summary").val(),
+                    info: $("#goodsinfo").val(),
+                    price: $("#goodsprice").val(),
+                },
+                success:function(data){
+                    // window.location.href="/NTES/info/edSuccess.html";
+                    localStorage.setItem("id",id);
+                    var url = "/NTES/success";
+                    $("#form").attr("action",url).submit();
+                }
+            })
+
+            $("#form").attr("action","/NTES/add").submit();
+        }
+
+
+
 
     })
 

@@ -23,7 +23,7 @@ public interface GoodsMapper {
 
 
     @Options(useGeneratedKeys = true,keyProperty = "id")
-    @Insert("insert into goods(sellername,goodsname,price,sellnums,location,info,summary) " +
+    @Insert("insert into goods(sellername,goodsname,price,location,info,summary) " +
             "values(#{sellername},#{goodsname},#{price},#{location},#{info},#{summary})")
     public void addGoods(Goods goods);
 

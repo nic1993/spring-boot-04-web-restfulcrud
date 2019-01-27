@@ -1,6 +1,6 @@
 package com.atguigu.springboot04webrestfulcrud.controller;
 
-import com.atguigu.springboot04webrestfulcrud.Service.LoginService;
+import com.atguigu.springboot04webrestfulcrud.Service.LoginServiceImp;
 import com.atguigu.springboot04webrestfulcrud.entities.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class LoginController {
     public final static String LOGIN_STATUS_LOGIN_SUCCESS_STR = "登陆成功";
 
     @Autowired
-    LoginService loginService;
+    LoginServiceImp loginService;
 
     @PostMapping("/user/login")
     public  String login(@RequestParam("username") String username, @RequestParam("password") String password,

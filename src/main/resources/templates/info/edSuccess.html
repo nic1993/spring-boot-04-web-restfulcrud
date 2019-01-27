@@ -57,10 +57,10 @@
         <div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            </div><div class="g-doc">
+            <div class="g-doc">
               <div class="n-result">
               <h3>编辑成功！</h3>
-             <p><a href="/show?id=1">[查看内容]</a></p>
+             <p><a href=""  id="content">[查看内容]</a></p>
     </div>
 </div>
         </main>
@@ -84,12 +84,14 @@
 <!-- Graphs -->
 <script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
 
-<!--<script type="text/javascript">-->
+<script type="text/javascript">
 
-<!--$(document).ready(function () {-->
-<!--alert("1111");-->
-<!--});-->
-<!--</script>-->
+$(document).ready(function () {
+   var id = localStorage.getItem("id");
+   var url = "/NTES/detail/" + id;
+   $("#content").attr("href",url);
+});
+</script>
 
 </body>
 

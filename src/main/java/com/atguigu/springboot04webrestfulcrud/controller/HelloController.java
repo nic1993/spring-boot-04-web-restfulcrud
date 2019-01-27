@@ -22,13 +22,13 @@ public class HelloController {
         return  "Hello World";
     }
 
-    @RequestMapping("/success")
-    public  String success(Map<String,Object> map){
-
-        System.out.println("===========");
-
-        map.put("hello","你好");
-        map.put("users", Arrays .asList("zhangsan","lisi","wangwu"));
-        return  "index";
-    }
+//    @RequestMapping("/success")
+//    public  String success(Map<String,Object> map){
+//
+//        System.out.println("===========");
+//
+//        map.put("hello","你好");
+//        map.put("users", Arrays .asList("zhangsan","lisi","wangwu"));
+//        return  "index";
+//    }
 }

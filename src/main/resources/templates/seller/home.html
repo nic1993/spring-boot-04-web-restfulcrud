@@ -94,7 +94,7 @@
             success:function(data){
                 var arr = data.allgoods;
                 for(var i = 0;i < arr.length;i++){
-                    var id = "/NTES/info/" + arr[i].id;
+                    var id = "/NTES/detail/" + arr[i].id;
                     var num = arr[i].sellnums;
                     var loc = arr[i].location;
                     $("#plist").append('<li id="p-4">\n' +

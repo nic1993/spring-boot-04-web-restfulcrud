@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -42,7 +44,7 @@ public class GoodsController {
         return map;
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/detail/{id}")
     public String getGoodsById(@PathVariable("id") Integer id, Model model, HttpSession session){
         Goods goods = goodService.getGoodsById(id);
         model.addAttribute("goods",goods);
@@ -69,6 +71,11 @@ public class GoodsController {
         return  "info/edit";
     }
 
+    @RequestMapping("/success")
+    public String EditSuccess(){
+        return  "redirect:/success.html";
+    }
+
     @ResponseBody
     @PostMapping("/edit")
     public Map getGoodsForEdit(@RequestParam(value = "file",required = false) MultipartFile file){
@@ -76,12 +83,21 @@ public class GoodsController {
         return  map;
     }
 
-//    @PostMapping("/add")
-//    public String addGoods(Goods goods,HttpSession session){
-//        String sellername = (String) session.getAttribute("sellerUser");
-//        goods.setSellername(sellername);
-//
-//        goodService.addGoods(goods);
+    @PostMapping("/add")
+    public String addGoods(Goods goods,HttpSession session,RedirectAttributes redirectAttributes){
+        String sellername = (String) session.getAttribute("sellerUser");
+        goods.setSellername(sellername);
+        goodService.addGoods(goods);
+        redirectAttributes.addFlashAttribute("id",goods.getId());
+        return   "redirect:/success.html";
+    }
+
+//    @RequestMapping("/success")
+//    public ModelAndView Success(@ModelAttribute("id")Integer id, RedirectAttributes redirectAttributes){
+//        Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
+//        ModelAndView modelAndView = new ModelAndView("/info/edSuccess");
+//        modelAndView.addObject("id",flashAttributes.get("id"));
+//        return   modelAndView;
 //    }
 
 }
