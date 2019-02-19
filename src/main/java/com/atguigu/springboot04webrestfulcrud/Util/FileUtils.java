@@ -3,10 +3,8 @@ package com.atguigu.springboot04webrestfulcrud.Util;
 import com.atguigu.springboot04webrestfulcrud.config.MyMvcConfig;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;

@@ -46,14 +46,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
+        <div th:replace="commons/buyerbar::#sidebar(activeUri='/seller/home.html')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="sellerhome">
             <div class="g-doc">
                 <div class="m-tab m-tab-fw m-tab-simple f-cb">
                     <div class="tab">
                         <ul>
-                            <li class="z-sel" ><a href="/">所有内容</a></li>
+                            <li class="z-sel" ><a href="javascript:void(0)" onclick="getpurchasegoods()">所有内容</a></li>
+                            <li  ><a href="javascript:void(0)" onclick="getnopurchasegoods()">未购买的内容</a></li>
                         </ul>
                     </div>
                 </div>
@@ -74,7 +75,8 @@
 <script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
-
+<script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>
+<script type="text/javascript"  th:src="@{/asserts/js/pageIndex.js}" ></script>
 <!-- Icons -->
 <script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
 <script>
@@ -85,24 +87,37 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        getpurchasegoods();
+    })
 
-
+    function  getpurchasegoods(){
         $.ajax({
-            url:'../goods/seller',
+            url:'../NTES/buyer',
             type:'GET',
             datatype:'JSON',
             success:function(data){
-                var arr = data.allgoods;
+                $("#plist").empty();
+                var arr = data.buygoods;
                 for(var i = 0;i < arr.length;i++){
-                    var id = "/NTES/seller/detail/" + arr[i].id;
-                    var num = arr[i].sellnums;
+                    var id = "/NTES/buyer/detail/" + arr[i].id;
                     var loc = arr[i].location;
                     $("#plist").append('<li id="p-4">\n' +
                         '<a href='+id+' class=\"link\">\n' +
                         "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
-                        "<h3>"+arr[i].lastName+"</h3>\n" +
+                        "<h3>"+arr[i].goodsname+"</h3>\n" +
                         "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
-                        "<span class=\"had\"><b>已售出" +num + "件</b></span>\n"+
+                        "<span class=\"had\"><b>已购买</b></span>\n"+
+                        "</a></li>")
+                }
+                var list = data.nobuygoods;
+                for(var i = 0;i < list.length;i++){
+                    var id = "/NTES/buyer/detail/" + list[i].id;
+                    var loc = list[i].location;
+                    $("#plist").append('<li id="p-4">\n' +
+                        '<a href='+id+' class=\"link\">\n' +
+                        "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
+                        "<h3>"+list[i].goodsname+"</h3>\n" +
+                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +list[i].price+"</span></div>\n" +
                         "</a></li>")
                 }
             },
@@ -111,7 +126,34 @@
                 console.log(err);
             }
         });
-    })
+    }
+
+    function  getnopurchasegoods(){
+        $.ajax({
+            url:'../NTES/buyer/lists',
+            type:'GET',
+            datatype:'JSON',
+            success:function(data){
+                $("#plist").empty();
+                var arr = data.buygoods;
+                for(var i = 0;i < arr.length;i++){
+                    var id = "/NTES/buyer/detail/" + arr[i].id;
+                    var loc = arr[i].location;
+                    $("#plist").append('<li id="p-4">\n' +
+                        '<a href='+id+' class=\"link\">\n' +
+                        "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
+                        "<h3>"+arr[i].goodsname+"</h3>\n" +
+                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
+                        "</a></li>")
+                }
+            },
+            error:function(err){
+                alert('发生了错误：'+err.status);
+                console.log(err);
+            }
+        });
+    }
+
 </script>
 
 </body>

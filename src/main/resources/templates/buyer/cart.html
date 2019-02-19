@@ -46,22 +46,17 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
+        <div th:replace="commons/buyerbar::#sidebar(activeUri='/seller/home.html')"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="sellerhome">
             <div class="g-doc">
                 <div class="m-tab m-tab-fw m-tab-simple f-cb">
-                    <div class="tab">
-                        <ul>
-                            <li class="z-sel" ><a href="/">所有内容</a></li>
-                        </ul>
-                    </div>
+                    <h2>已添加到购物车的内容</h2>
                 </div>
-                <div class="n-plist">
-                    <ul class="f-cb" id="plist">
-
-                    </ul>
-                </div>
+                <table id="newTable" class="m-table m-table-row n-table g-b3">
+                </table>
+                <div id="act-btn"><button class="u-btn u-btn-primary" id="back">退出</button>
+                    <button class="u-btn u-btn-primary" id="Account">购买</button></div>
             </div>
 
         </main>
@@ -74,43 +69,45 @@
 <script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
-
+<script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>
+<script type="text/javascript"  th:src="@{/asserts/js/settleAccount.js}" ></script>
 <!-- Icons -->
 <script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
 <script>
     feather.replace()
 </script>
-
-
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-
         $.ajax({
-            url:'../goods/seller',
+            url:'/NTES/ShowCart',
             type:'GET',
             datatype:'JSON',
             success:function(data){
-                var arr = data.allgoods;
-                for(var i = 0;i < arr.length;i++){
-                    var id = "/NTES/seller/detail/" + arr[i].id;
-                    var num = arr[i].sellnums;
-                    var loc = arr[i].location;
-                    $("#plist").append('<li id="p-4">\n' +
-                        '<a href='+id+' class=\"link\">\n' +
-                        "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
-                        "<h3>"+arr[i].lastName+"</h3>\n" +
-                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
-                        "<span class=\"had\"><b>已售出" +num + "件</b></span>\n"+
-                        "</a></li>")
+                var arr = data.products;
+                console.log(arr);
+                var str = "<tr>" +
+                    "<th>" + '内容名称'  + "</th>"+
+                    "<th>" + '数量' + "</th>" +
+                    "<th>" + '价格' + "</th>" +
+                    "</tr>";
+
+                for(var i = 0; i < arr.length; i++){
+                    str = str +
+                        "<tr>" +
+                        "<td>" + arr[i].goodsname  + "</td>"+
+                        "<td>" +
+                        "<span class=\"lessNum\">"+ "-" + "</span>" +
+                        "<span class=\"totalNum\" id=\"allNum\">" + arr[i].goodsnum + "</span>" +
+                        "<span id=\"thisId\">" + arr[i].goodsid + "</span>" +
+                        "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
+                        "<td>" + arr[i].goodsprice + "</td>" +
+                        "</tr>";
                 }
-            },
-            error:function(err){
-                alert('发生了错误：'+err.status);
-                console.log(err);
+                $("#newTable").append(str);
+
             }
-        });
+        })
     })
 </script>
 

@@ -1,19 +1,12 @@
 package com.atguigu.springboot04webrestfulcrud.component;
 
 
-
-
-
-import org.apache.tomcat.jni.Local;
-import org.mockito.internal.util.StringUtil;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
-import java.util.Set;
 
 public class MyLocaleResolver implements LocaleResolver {
 

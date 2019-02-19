@@ -2,10 +2,13 @@ package com.atguigu.springboot04webrestfulcrud.dao;
 
 
 import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
+import com.atguigu.springboot04webrestfulcrud.entities.CartGoods;
 import com.atguigu.springboot04webrestfulcrud.entities.Seller;
 import com.atguigu.springboot04webrestfulcrud.mapper.Loginmapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class LoginDao {

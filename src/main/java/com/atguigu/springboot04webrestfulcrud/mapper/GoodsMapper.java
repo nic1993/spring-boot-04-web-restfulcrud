@@ -3,7 +3,6 @@ package com.atguigu.springboot04webrestfulcrud.mapper;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
 import org.apache.ibatis.annotations.*;
 
-import javax.annotation.Generated;
 import java.util.List;
 
 @Mapper
@@ -26,5 +25,9 @@ public interface GoodsMapper {
     @Insert("insert into goods(sellername,goodsname,price,location,info,summary) " +
             "values(#{sellername},#{goodsname},#{price},#{location},#{info},#{summary})")
     public void addGoods(Goods goods);
+
+    @Select("select * from goods where id not in (select goodsid from finance where buyername=#{buyername})")
+    public List<Goods> getnopurchasegoods(String buyername);
+
 
 }

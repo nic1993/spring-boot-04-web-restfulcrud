@@ -1,10 +1,8 @@
 package com.atguigu.springboot04webrestfulcrud.controller;
 
 import com.atguigu.springboot04webrestfulcrud.exception.UserNotExistException;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

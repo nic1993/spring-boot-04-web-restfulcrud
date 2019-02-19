@@ -12,13 +12,10 @@ public class LoginServiceImp {
     @Autowired
     LoginDao loginDao;
 
-    public  boolean getBuyerByName(String name,String password){
-        if(name == null) return  false;
+    public Buyer getBuyerByName(String name,String password){
+        if(name == null) return  null;
         Buyer buyer = loginDao.getBuyerByName(name);
-        if(buyer == null || !password.equals(buyer.getPassword())){
-            return false;
-        }
-        return  true;
+        return  buyer;
     }
 
     public Seller getSellerByName(String name,String password){

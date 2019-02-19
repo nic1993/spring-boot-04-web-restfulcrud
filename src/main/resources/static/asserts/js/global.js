@@ -176,7 +176,7 @@
             this.rend({message:message});
             if(this.timer){
                 w.clearTimeout(this.timer);
-            }
+            }ajax
             this.timer = w.setTimeout(function(){
                 this.hide();
                 callback && callback();

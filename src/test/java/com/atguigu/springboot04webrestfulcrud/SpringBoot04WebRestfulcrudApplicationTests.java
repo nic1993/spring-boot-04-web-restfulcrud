@@ -1,23 +1,30 @@
 package com.atguigu.springboot04webrestfulcrud;
 
+import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
+import com.atguigu.springboot04webrestfulcrud.Service.GoodService;
+import com.atguigu.springboot04webrestfulcrud.controller.TestConsumer;
+import com.atguigu.springboot04webrestfulcrud.controller.TestGoodService;
 import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
+import com.atguigu.springboot04webrestfulcrud.entities.CartGoods;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
+import com.atguigu.springboot04webrestfulcrud.mapper.FinanceMapper;
 import com.atguigu.springboot04webrestfulcrud.mapper.GoodsMapper;
 import com.atguigu.springboot04webrestfulcrud.mapper.Loginmapper;
-import com.sun.org.apache.bcel.internal.util.ClassPath;
+
+import com.atguigu.springboot04webrestfulcrud.mapper.ShoppingCartMapper;
+import com.ntes.loginserviceprovider.entities.Seller;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -29,6 +36,18 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 
 	@Autowired
 	GoodsMapper goodsMapper;
+
+    @Autowired
+	TestConsumer testConsumer;
+
+    @Autowired
+	FinanceMapper financeMapper;
+
+    @Autowired
+    ShoppingCartMapper shoppingCartMapper;
+
+    @Autowired
+    GoodService goodService;
 
 	@Test
 	public void contextLoads() {
@@ -93,4 +112,23 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 
 
 	}
+
+
+	@Test
+	public void testconsumer(){
+		List<CartGoods> goods = shoppingCartMapper.getCartGoodsList("buyer");
+		System.out.println(goods.size());
+
+	}
+
+    @Test
+	public void TestGoodService(){
+		List<Goods> lists = financeMapper.getGoodsByBuyer("buyer");
+
+		for(Goods dto : lists){
+			System.out.println(dto.getGoodsname());
+		}
+	}
+
+
 }
