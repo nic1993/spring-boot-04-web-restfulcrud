@@ -1,9 +1,9 @@
 package com.atguigu.springboot04webrestfulcrud;
 
-import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
+
 import com.atguigu.springboot04webrestfulcrud.Service.GoodService;
 import com.atguigu.springboot04webrestfulcrud.controller.TestConsumer;
-import com.atguigu.springboot04webrestfulcrud.controller.TestGoodService;
+
 import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
 import com.atguigu.springboot04webrestfulcrud.entities.CartGoods;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
@@ -12,7 +12,7 @@ import com.atguigu.springboot04webrestfulcrud.mapper.GoodsMapper;
 import com.atguigu.springboot04webrestfulcrud.mapper.Loginmapper;
 
 import com.atguigu.springboot04webrestfulcrud.mapper.ShoppingCartMapper;
-import com.ntes.loginserviceprovider.entities.Seller;
+
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;

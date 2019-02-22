@@ -1,63 +1,20 @@
 (function(w,d,u){
+
+
+
     var settleAccount = util.get('settleAccount');
     if(!settleAccount){
         return;
     }
+
     var name = 'products';
     var products = util.getCookie(name);
+
     var $ = function(id){
         return document.getElementById(id);
     }
 
-    ajax({
-        url:'/NTES/ShowCart',
-        type:'GET',
-        datatype:'JSON',
-        success:function(data){
-            var products = data.products;
-            console.log(products);
-            var str = "<tr>" +
-                "<th>" + '内容名称'  + "</th>"+
-                "<th>" + '数量' + "</th>" +
-                "<th>" + '价格' + "</th>" +
-                "</tr>";
-            for(var i = 0; i < products.length; i++){
-                str = str +
-                    "<tr>" +
-                    "<td>" + products[i].title  + "</td>"+
-                    "<td>" +
-                    "<span class=\"lessNum\">"+ "-" + "</span>" +
-                    "<span class=\"totalNum\" id=\"allNum\">" + products[i].num + "</span>" +
-                    "<span id=\"thisId\">" + products[i].id + "</span>" +
-                    "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
-                    "<td>" + products[i].price + "</td>" +
-                    "</tr>";
-            }
 
-            $("newTable").innerHTML = str;
-        }
-    })
-
-    // var str = "<tr>" +
-    //     "<th>" + '内容名称'  + "</th>"+
-    //     "<th>" + '数量' + "</th>" +
-    //     "<th>" + '价格' + "</th>" +
-    //     "</tr>";
-    //
-    // for(var i = 0; i < products.length; i++){
-    //     str = str +
-    //         "<tr>" +
-    //         "<td>" + products[i].title  + "</td>"+
-    //         "<td>" +
-    //         "<span class=\"lessNum\">"+ "-" + "</span>" +
-    //         "<span class=\"totalNum\" id=\"allNum\">" + products[i].num + "</span>" +
-    //         "<span id=\"thisId\">" + products[i].id + "</span>" +
-    //         "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
-    //         "<td>" + products[i].price + "</td>" +
-    //         "</tr>";
-    // }
-    //
-    // $("newTable").innerHTML = str;
 
     window.onload = function(){
         $('newTable').onclick = function(e){
@@ -87,9 +44,9 @@
     var loading = new Loading();
     var layer = new Layer();
     $('Account').onclick = function(e){
-        var newProducts = products.map(function(arr){
-            return {'id':arr.id,'number':arr.num};
-        });
+        // var newProducts = products.map(function(arr){
+        //     return {'id':arr.id,'number':arr.num};
+        // });newProducts
         console.log(newProducts);
         var ele = e.target;
         layer.reset({
@@ -126,4 +83,6 @@
     $('back').onclick = function(){
         location.href = window.history.back();
     }
+
+
 })(window,document);

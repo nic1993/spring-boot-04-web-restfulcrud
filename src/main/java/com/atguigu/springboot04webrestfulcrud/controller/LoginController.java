@@ -1,11 +1,10 @@
 package com.atguigu.springboot04webrestfulcrud.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 
 import com.atguigu.springboot04webrestfulcrud.Service.LoginServiceImp;
 import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
 import com.atguigu.springboot04webrestfulcrud.entities.Seller;
-import com.ntes.loginserviceprovider.Service.LoginService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,7 @@
 (function(w,d,u){
+
+
+
     var f = function(){};
 
     var formatParams =function(data) {
@@ -58,6 +61,7 @@
     var ajax = function(options) {
         var options = options || {};
         options.type = (options.type || "POST").toUpperCase();
+
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
@@ -79,6 +83,7 @@
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.send(util.serialize(options.data));
         }else{
+            alert(options.data);
             xhr.open("GET", options.url + "?" + formatParams(options.data), true);
             xhr.send(null);
         }

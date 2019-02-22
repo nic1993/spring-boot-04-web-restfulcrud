@@ -51,12 +51,14 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="sellerhome">
             <div class="g-doc" id="settleAccount">
                 <div class="m-tab m-tab-fw m-tab-simple f-cb">
-                    <h2>已添加到购物车的内容</h2>
+                    <h2>已购买的内容</h2>
                 </div>
-                <table id="newTable" class="m-table m-table-row n-table g-b3">
+                <table class="m-table m-table-row n-table g-b3">
+                    <colgroup><col class="img"/><col/><col class="time"/><col/><col class="num"/><col/><col class="price"/><col/></colgroup>
+                    <thead>
+                    <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th></tr>
+                    </thead>
                 </table>
-                <div id="act-btn"><button class="u-btn u-btn-primary" id="back">退出</button>
-                    <button class="u-btn u-btn-primary" id="Account">购买</button></div>
             </div>
 
         </main>
@@ -85,21 +87,18 @@
             datatype:'JSON',
             success:function(data){
                 var arr = data.products;
-                var str = "<tr>" +
-                    "<th>" + '内容名称'  + "</th>"+
-                    "<th>" + '数量' + "</th>" +
-                    "<th>" + '价格' + "</th>" +
-                    "</tr>";
+                var str = "";
                 for(var i = 0; i < arr.length; i++){
+                    var loc = "/NTES/buyer/detail/" + arr[i].goodsid;
+                    var src = arr[i].location;
                     str = str +
                         "<tr>" +
-                        "<td>" + arr[i].goodsname  + "</td>"+
-                        "<td>" +
-                        "<span class=\"lessNum\">"+ "-" + "</span>" +
-                        "<span class=\"totalNum\" id=\"allNum\">" + arr[i].goodsnum + "</span>" +
-                        "<span id=\"thisId\">" + arr[i].goodsid + "</span>" +
+                        "<td><a href=" + loc +">" +"<img src=" +  src + ">" + "</a>" + "</td>"+
+                        "<td><h4><a href=" + loc + ">" + arr[i].goodsname + "</a></h4></td>>"+
+                        "<td><span class=\"v-time\">"+ arr[i].time + "</span></td>" +
+                        "<td><span class=\"v-num\">" + arr[i].goodsnum + "</span></td>>" +
+                        "<td><span id=\"v-unit\">¥</span><span class=\"value\">" + arr[i].price + "</span></td>" +
                         "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
-                        "<td>" + arr[i].goodsprice + "</td>" +
                         "</tr>";
                 }
                 $("#newTable").append(str);

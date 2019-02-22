@@ -20,4 +20,10 @@ public class ShoppingCartService {
     public List<CartGoods> getCartGoodsList(String buyername){
         return shoppingCartDao.getCartGoodsList(buyername);
     }
+
+    public String getCartGoodsById(Integer id){
+        return shoppingCartDao.getCartGoodsById(id);
+    }
+
+    public Integer updateCartGoodsById(CartGoods cartGoods){return shoppingCartDao.updateCartGoodsById(cartGoods);}
 }

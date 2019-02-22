@@ -20,4 +20,10 @@ public class ShoppingCartDao {
     public List<CartGoods> getCartGoodsList(String buyername){
         return shoppingCartMapper.getCartGoodsList(buyername);
     }
+
+    public String getCartGoodsById(Integer id){
+        return shoppingCartMapper.getCartGoodsById(id);
+    }
+
+    public Integer updateCartGoodsById(CartGoods cartGoods){return shoppingCartMapper.updateCartGoodsById(cartGoods);}
 }

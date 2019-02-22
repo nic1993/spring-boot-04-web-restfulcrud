@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +36,9 @@ public class ShoppingCartController {
         if(num == 0){
             throw new RuntimeException();
         }
-        Buyer buyer = (Buyer) session.getAttribute("buyerUser");
         Goods goods = goodService.getGoodsById(id);
+        String goodsname = shoppingCartService.getCartGoodsById(id);
+        Buyer buyer = (Buyer) session.getAttribute("buyerUser");
         CartGoods cartGoods = new CartGoods();
         cartGoods.setGoodsid(id);
         cartGoods.setGoodsprice(goods.getPrice());
@@ -43,7 +46,12 @@ public class ShoppingCartController {
         cartGoods.setGoodsname(goods.getGoodsname());
         cartGoods.setBuyerid(buyer.getId());
         cartGoods.setBuyername(buyer.getName());
-        Integer row = shoppingCartService.addShoppingCart(cartGoods);
+        Integer row = 0;
+       if(goodsname != null){
+           row = shoppingCartService.updateCartGoodsById(cartGoods);
+       }else {
+           row = shoppingCartService.addShoppingCart(cartGoods);
+       }
         return  row;
     }
 
@@ -52,7 +60,6 @@ public class ShoppingCartController {
     public Map showcart(HttpSession session){
         Map<String,Object> map = new HashMap<>();
         Buyer buyer = (Buyer) session.getAttribute("buyerUser");
-        System.out.println();
         List<CartGoods> products = shoppingCartService.getCartGoodsList(buyer.getName());
         map.put("products",products);
         return map;

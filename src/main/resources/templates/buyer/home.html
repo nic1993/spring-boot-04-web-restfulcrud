@@ -42,7 +42,7 @@
 </head>
 
 <body>
-<div th:replace="commons/sellerbar::topbar"></div>
+<div th:replace="commons/buyerbar::topbar"></div>
 
 <div class="container-fluid">
     <div class="row">
@@ -92,7 +92,7 @@
 
     function  getpurchasegoods(){
         $.ajax({
-            url:'../NTES/buyer',
+            url:'/NTES/buyer',
             type:'GET',
             datatype:'JSON',
             success:function(data){
@@ -130,7 +130,7 @@
 
     function  getnopurchasegoods(){
         $.ajax({
-            url:'../NTES/buyer/lists',
+            url:'/NTES/buyer/lists',
             type:'GET',
             datatype:'JSON',
             success:function(data){
