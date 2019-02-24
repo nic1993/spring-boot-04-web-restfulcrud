@@ -1,10 +1,12 @@
 package com.atguigu.springboot04webrestfulcrud.controller;
 
 
+import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
 import com.atguigu.springboot04webrestfulcrud.Service.GoodService;
 import com.atguigu.springboot04webrestfulcrud.Util.FileUtils;
 
 
+import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
 import com.atguigu.springboot04webrestfulcrud.entities.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,5 +142,15 @@ public class GoodsController {
         }else {
             return "info/buydetail";
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/buyer/finance")
+    public Map<String,Object> getGoodsForBuyer( HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        Buyer buyer = (Buyer) session.getAttribute("buyerUser");
+        List<GoodsDto> finance = goodService.getFinance(buyer.getName());
+        map.put("products",finance);
+        return map;
     }
 }

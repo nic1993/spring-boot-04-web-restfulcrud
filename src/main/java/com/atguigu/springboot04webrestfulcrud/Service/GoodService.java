@@ -42,4 +42,8 @@ public class GoodService {
     public String getGoodsByFinance(Integer id){
         return goodsDao.getGoodsByFinance(id);
     }
+
+    public List<GoodsDto> getFinance(String buyername){
+        return goodsDao.getFinance(buyername);
+    }
 }

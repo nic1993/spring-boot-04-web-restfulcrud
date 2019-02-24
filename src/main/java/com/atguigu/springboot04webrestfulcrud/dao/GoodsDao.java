@@ -1,5 +1,6 @@
 package com.atguigu.springboot04webrestfulcrud.dao;
 
+import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
 import com.atguigu.springboot04webrestfulcrud.mapper.FinanceMapper;
 import com.atguigu.springboot04webrestfulcrud.mapper.GoodsMapper;
@@ -43,6 +44,9 @@ public class GoodsDao {
 
     public String getGoodsByFinance(Integer id){
         return financeMapper.getGoodsByFinance(id);
+    }
+    public List<GoodsDto> getFinance(String buyername){
+          return financeMapper.getFinance(buyername);
     }
 
 }
