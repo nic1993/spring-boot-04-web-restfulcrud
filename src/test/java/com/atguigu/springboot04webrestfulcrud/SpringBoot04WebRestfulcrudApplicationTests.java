@@ -1,8 +1,8 @@
 package com.atguigu.springboot04webrestfulcrud;
 
 
+import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
 import com.atguigu.springboot04webrestfulcrud.Service.GoodService;
-import com.atguigu.springboot04webrestfulcrud.controller.TestConsumer;
 
 import com.atguigu.springboot04webrestfulcrud.entities.Buyer;
 import com.atguigu.springboot04webrestfulcrud.entities.CartGoods;
@@ -37,8 +37,6 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 	@Autowired
 	GoodsMapper goodsMapper;
 
-    @Autowired
-	TestConsumer testConsumer;
 
     @Autowired
 	FinanceMapper financeMapper;
@@ -127,6 +125,14 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 
 		for(Goods dto : lists){
 			System.out.println(dto.getGoodsname());
+		}
+	}
+
+	@Test
+	public void TestFinance(){
+		List<GoodsDto> lists = financeMapper.getFinance("buyer");
+		for(GoodsDto dto : lists){
+			System.out.println(dto.getGoodsnum());
 		}
 	}
 

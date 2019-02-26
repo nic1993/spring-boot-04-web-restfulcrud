@@ -112,18 +112,6 @@
             <version>2.5</version>
         </dependency>
 
-        <!--登录模块-->
-        <dependency>
-            <groupId>com.NTES</groupId>
-            <artifactId>loginservice-provider</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ntes.goodservice</groupId>
-            <artifactId>goodservice-provider</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>

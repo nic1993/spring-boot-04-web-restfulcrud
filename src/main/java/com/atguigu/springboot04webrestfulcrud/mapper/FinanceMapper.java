@@ -16,7 +16,6 @@ public interface FinanceMapper {
     @Select("select * from goods where id in (select goodsid from finance where buyername=#{buyername})")
     public List<Goods> getGoodsByBuyer(String buyername);
 
-
     @Select("select buyername from finance where goodsid=#{id}")
     public String getGoodsByFinance(Integer id);
 
@@ -26,7 +25,7 @@ public interface FinanceMapper {
             "</foreach>")
     public void insertFinance(@Param(value = "list") List<GoodsDto> goodsDtos);
 
-    @Select("select f.goodsid,f.time,f.goodsname,f.curprice,g.location   from finance f left join goods g on f.goodsid=g.id where f.buername=#{buyername}")
+    @Select("select f.goodsid,f.time,g.goodsname,f.curprice,g.location  from finance f left join goods g on f.goodsid=g.id where f.buyername=#{buyername}")
     public List<GoodsDto> getFinance(String buyername);
 }
 
