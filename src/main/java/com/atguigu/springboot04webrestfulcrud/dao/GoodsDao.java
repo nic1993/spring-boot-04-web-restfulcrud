@@ -4,6 +4,7 @@ import com.atguigu.springboot04webrestfulcrud.Dto.GoodsDto;
 import com.atguigu.springboot04webrestfulcrud.entities.Goods;
 import com.atguigu.springboot04webrestfulcrud.mapper.FinanceMapper;
 import com.atguigu.springboot04webrestfulcrud.mapper.GoodsMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +48,18 @@ public class GoodsDao {
     }
     public List<GoodsDto> getFinance(String buyername){
           return financeMapper.getFinance(buyername);
+    }
+
+    public Integer insertFinance(List<GoodsDto> goodsDtos){
+          return financeMapper.insertFinance(goodsDtos);
+    }
+
+    public List<Goods> getGoodsFromCart(String buyername){
+        return goodsMapper.getGoodsFromCart(buyername);
+    }
+
+    public void updateGoodsNum(List<Goods> goods){
+        goodsMapper.updateGoodsNum(goods);
     }
 
 }

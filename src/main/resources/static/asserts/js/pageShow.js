@@ -7,7 +7,7 @@ $('plusNum').onclick = function(e){
     e = window.event || e;
     o = e.srcElement || e.target;
     var num = $('allNum').textContent;
-    if(num > 0){
+    if(num > 1){
         num --;
         $('allNum').innerHTML = num;
     }else{
@@ -71,16 +71,16 @@ $('add').onclick = function(e){
         }
     })
 
-    e == window.event || e;
-    layer.reset({
-        content:'确认加入购物车吗？',
-        onconfirm:function(){
-            layer.hide();
-            loading.show();
-            loading.result('添加购物车成功');
-        }.bind(this)
-    }).show();
-    return;
+    // e == window.event || e;
+    // layer.reset({
+    //     content:'确认加入购物车吗？',
+    //     onconfirm:function(){
+    //         layer.hide();
+    //         loading.show();
+    //         loading.result('添加购物车成功');
+    //     }.bind(this)
+    // }).show();
+    // return;
 };
 
 

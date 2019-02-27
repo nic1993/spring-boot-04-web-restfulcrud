@@ -97,11 +97,10 @@
                         "<td><h4><a href=" + loc + ">" + arr[i].goodsname + "</a></h4></td>>"+
                         "<td><span class=\"v-time\">"+ arr[i].time + "</span></td>" +
                         "<td><span class=\"v-num\">" + arr[i].goodsnum + "</span></td>>" +
-                        "<td><span id=\"v-unit\">¥</span><span class=\"value\">" + arr[i].curprice + "</span></td>" +
+                        "<td><span id=\"v-unit\">¥</span><span class=\"value\">" + arr[i].price + "</span></td>" +
                         "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
                         "</tr>";
                 }
-                console.log(str);
                 $("#newTable").append(str);
             },
             error:function(err){

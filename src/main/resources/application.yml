@@ -4,7 +4,7 @@ spring:
     username: root
     password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.132.149.10:3306/NTES?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    url: jdbc:mysql://101.132.149.10:3306/NTES?useUnicode=true&characterEncoding=utf8&&allowMultiQueries=true&serverTimezone=UTC
 
     initialization-mode: always
     type: com.alibaba.druid.pool.DruidDataSource

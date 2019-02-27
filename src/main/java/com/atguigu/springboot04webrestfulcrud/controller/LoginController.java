@@ -34,7 +34,7 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/buyer/login")
-    public  Map<String,Object> login(@RequestParam("username") String username, @RequestParam("password") String password,
+    public  Map<String,Object> login(@RequestParam(value = "username",required = false) String username, @RequestParam(value = "password",required = false) String password,
                          Map<String,Object> map, HttpSession session){
         int loginStatusCode = -1;
         String loginStatusStr = "";
@@ -51,7 +51,7 @@ public class LoginController {
             loginStatusCode=LOGIN_STATUS_WRONG_PASSWORD;
             loginStatusStr=LOGIN_STATUS_WRONG_PASSWORD_STR;
         } else {
-            session.setAttribute("buyerUser", buyer);
+            session.setAttribute("buyer", buyer);
             resultMap.put("buyer", buyer);
 
             loginStatusCode=LOGIN_STATUS_LOGIN_SUCCESS;
@@ -64,7 +64,7 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/seller/login")
-    public  Map<String,Object> sellerlogin(@RequestParam("username") String username, @RequestParam("password") String password,
+    public  Map<String,Object> sellerlogin(@RequestParam(value = "username",required = false) String username, @RequestParam(value = "password",required = false) String password,
                                HttpSession session) {
         int loginStatusCode = -1;
         String loginStatusStr = "";

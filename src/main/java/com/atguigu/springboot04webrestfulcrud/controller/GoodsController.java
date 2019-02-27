@@ -37,12 +37,12 @@ public class GoodsController {
     }
 
     @ResponseBody
-    @GetMapping("/goods/{name}")
-    public Map<String,Object> getGoodsBySeller(@PathVariable("name") String name,HttpSession session){
+    @GetMapping("/seller/goods")
+    public Map<String,Object> getGoodsBySeller(HttpSession session){
         Seller seller = (Seller) session.getAttribute("seller");
         List<Goods> goods = null;
         if(seller != null){
-            goods = goodService.getGoodsBySeller("seller");
+            goods = goodService.getGoodsBySeller(seller.getName());
         }
         Map<String,Object> map = new HashMap<>();
         map.put("allgoods",goods);
@@ -50,29 +50,24 @@ public class GoodsController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getGoods(@PathVariable("id") Integer id, Model model, HttpSession session){
+    public String getGoods(@PathVariable("id") Integer id, Model model){
         Goods goods = goodService.getGoodsById(id);
         model.addAttribute("goods",goods);
-        if(session.getAttribute("sellerUser") != null){
-            return "info/sellerdetail";
-        }else if(session.getAttribute("buyerUser") != null){
-            return "info/buyerdetail";
-        }else{
-            return "info/detail";
-        }
+        return "info/detail";
     }
 
     @GetMapping("/seller/detail/{id}")
-    public String getGoodsById(@PathVariable("id") Integer id, Model model, HttpSession session){
+    public String getGoodsById(@PathVariable("id") Integer id, Model model){
         Goods goods = goodService.getGoodsById(id);
         model.addAttribute("goods",goods);
         return "info/sellerdetail";
     }
 
+    @ResponseBody
     @PutMapping("/edit")
-    public String updateGoodsById(Goods goods){
+    public Integer updateGoodsById(Goods goods){
         goodService.updateGoodsById(goods);
-        return "info/edSuccess";
+        return goods.getId();
     }
 
     @GetMapping("/edit/{id}")
@@ -95,13 +90,13 @@ public class GoodsController {
         return  map;
     }
 
+    @ResponseBody
     @PostMapping("/add")
-    public String addGoods(Goods goods,HttpSession session,RedirectAttributes redirectAttributes){
-        String sellername = (String) session.getAttribute("sellerUser");
+    public Integer addGoods(Goods goods,HttpSession session){
+        String sellername = ((Seller) session.getAttribute("seller")).getName();
         goods.setSellername(sellername);
         goodService.addGoods(goods);
-        redirectAttributes.addFlashAttribute("id",goods.getId());
-        return   "redirect:/success.html";
+        return  goods.getId();
     }
 
 //    @RequestMapping("/success")
@@ -114,26 +109,28 @@ public class GoodsController {
 
       @ResponseBody
       @GetMapping("/buyer")
-      public Map<String,Object> getBuyerGoods(){
+      public Map<String,Object> getBuyerGoods(HttpSession session){
+          Buyer buyer = (Buyer) session.getAttribute("buyer");
           Map<String,Object> map = new HashMap<>();
-          List<Goods> buygoods = goodService.getGoodsByBuyer("buyer");
+          List<Goods> buygoods = goodService.getGoodsByBuyer(buyer.getName());
           map.put("buygoods",buygoods);
-          List<Goods> nobuygoods = goodService.getnopurchasegoods("buyer");
+          List<Goods> nobuygoods = goodService.getnopurchasegoods(buyer.getName());
           map.put("nobuygoods",nobuygoods);
           return map;
       }
 
      @ResponseBody
      @GetMapping("/buyer/lists")
-     public Map<String,Object> getnopurchasegoods(){
+     public Map<String,Object> getnopurchasegoods(HttpSession session){
+         Buyer buyer = (Buyer) session.getAttribute("buyer");
          Map<String,Object> map = new HashMap<>();
-         List<Goods> buygoods = goodService.getnopurchasegoods("buyer");
+         List<Goods> buygoods = goodService.getnopurchasegoods(buyer.getName());
          map.put("buygoods",buygoods);
          return map;
      }
 
     @GetMapping("/buyer/detail/{id}")
-    public String getGoodsForBuyer(@PathVariable("id") Integer id, Model model, HttpSession session){
+    public String getGoodsForBuyer(@PathVariable("id") Integer id, Model model){
         Goods goods = goodService.getGoodsById(id);
         String buyername = goodService.getGoodsByFinance(id);
         model.addAttribute("goods",goods);
@@ -148,7 +145,7 @@ public class GoodsController {
     @GetMapping("/buyer/finance")
     public Map<String,Object> getGoodsForBuyer( HttpSession session){
         Map<String,Object> map = new HashMap<>();
-        Buyer buyer = (Buyer) session.getAttribute("buyerUser");
+        Buyer buyer = (Buyer) session.getAttribute("buyer");
         List<GoodsDto> finance = goodService.getFinance(buyer.getName());
         map.put("products",finance);
         return map;

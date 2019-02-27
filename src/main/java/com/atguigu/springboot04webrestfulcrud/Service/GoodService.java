@@ -46,4 +46,15 @@ public class GoodService {
     public List<GoodsDto> getFinance(String buyername){
         return goodsDao.getFinance(buyername);
     }
+
+    public Integer insertFinance(List<GoodsDto> goodsDtos){
+        return goodsDao.insertFinance(goodsDtos);
+    }
+
+    public List<Goods> getGoodsFromCart(String buyername){
+        return goodsDao.getGoodsFromCart(buyername);
+    }
+    public void updateGoodsNum(List<Goods> goods){
+        goodsDao.updateGoodsNum(goods);
+    }
 }

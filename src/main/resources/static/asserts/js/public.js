@@ -1,41 +1,43 @@
 (function(w,d,u){
     var btn_save = $("#savebtn");
-    console.log(btn_save);
+    var loading = new Loading();
+    var imageMode = "urlUpload";
     var form = util.get('form');
     if(!form){
         return;
     }
-    var title = form['goodsname'];
+
+    var id = form['goodsid'];
+    var goodsname = form['goodsname'];
     var summary = form['summary'];
     var image = form['location'];
-    var detail = form['goodsinfo'];
+    var info = form['goodsinfo'];
     var price = form['goodsprice'];
-    var uploadInput = form['fileUp'];
+    var uploadInput = form['file'];
     var isSubmiting = false;
     var imgpre = util.get('imgpre');
     var loading = new Loading();
     var imageUrl;
     var imageMode = "urlUpload";
-
     var page = {
-        init:function(){
-            var $ = function(id){
-                return document.getElementById(id);
-            };
+        init:function() {
+            // var $ = function (id) {
+            //     return document.getElementById(id);
+            // };
 
-            $('uploadType').onclick = function(e){
-                e = window.event || e;
-                o = e.srcElement || e.target;
-                if(o.nodeName==="INPUT"){
-                    var s,h;
-                    o.value==='url'?(s='urlUpload',h='fileUpload'):(s='fileUpload',h='urlUpload');
-                    imageMode = o.value==='url'?"urlUpload":"fileUpload";
-                    image.classList.remove("z-err");
-                    uploadInput.classList.remove("z-err");
-                    $(s).style.display='block';
-                    $(h).style.display='none';
-                }
-            };
+            // $('uploadType').onclick = function (e) {
+            //     e = window.event || e;
+            //     o = e.srcElement || e.target;
+            //     if (o.nodeName === "INPUT") {
+            //         var s, h;
+            //         o.value === 'url' ? (s = 'urlUpload', h = 'fileUpload') : (s = 'fileUpload', h = 'urlUpload');
+            //         imageMode = o.value === 'url' ? "urlUpload" : "fileUpload";
+            //         image.classList.remove("z-err");
+            //         uploadInput.classList.remove("z-err");
+            //         $(s).style.display = 'block';
+            //         $(h).style.display = 'none';
+            //     }
+            // };
 
             // $("upload").addEventListener('click', function (){
             //
@@ -77,48 +79,145 @@
             // });
 
 
-            form.addEventListener('click',function(e){
-                if(!isSubmiting && this.check()){
-                    price.value = Number(price.value);
-                    isSubmiting = true;
-                    form.submit();
+            //     form.addEventListener('click',function(e){
+            //         if(!isSubmiting && this.check()){
+            //             price.value = Number(price.value);
+            //             isSubmiting = true;
+            //             form.submit();
+            //         }
+            //     }.bind(this),false);
+            //     [title,summary,image,detail,price].forEach(function(item){
+            //         console.log(item);
+            //         item.addEventListener('input',function(e){
+            //             item.classList.remove('z-err');
+            //         }.bind(this),false);
+            //     }.bind(this));
+            //     image.addEventListener('input',function(e){
+            //         var value = image.value.trim();
+            //         if(value != ''){
+            //             imgpre.src = value;
+            //         }
+            //     }.bind(this),false);
+            // },
+
+            $(".radioItem").change(
+                function() {
+                    var value = $("input[name='pic']:checked").val();
+                    if (value == "file") {
+                        $("#urlUpload").hide();
+                        $("#fileUpload").show();
+                    } else {
+                        $("#urlUpload").show();
+                        $("#fileUpload").hide();
+                    }
+                });
+
+            $("#upload").click(function () {
+                var file = $("#fileUp").get(0).files[0];
+                var formData = new FormData();
+                formData.append("file",file);
+                $.ajax({
+                    url:'/NTES/edit',
+                    type:'POST',
+                    data:formData,
+                    datatype:'JSON',
+                    processData:false,
+                    contentType: false,
+                    success:function(data){
+                        alert(data.imgpath)
+                        $("#imgpre").attr("src",data.imgpath);
+                        imageUrl = data.imgpath;
+                    }
+                });
+            })
+
+            $("#savebtn").click(function () {
+                var loc = "";
+                var value = $("input[name='pic']:checked").val();
+                if (value == "file") {
+                    loc = $("#imgpre")[0].src;
+                    imageMode = "fileUpload";
+                } else {
+                    loc = $("#location").val();
+                    imageMode= "urlUpload";
                 }
-            }.bind(this),false);
-            [title,summary,image,detail,price].forEach(function(item){
-                console.log(item);
+
+                var goodsname = $("#goodsname").val();
+                var summary = $("#summary").val();
+                var info = $("#goodsinfo").val();
+                var price = $("#goodsprice").val();
+                if (check()) {
+                    var btn = $("#savebtn").text();
+                    alert(btn);
+                    if(btn == "发布"){
+                        $.ajax({
+                          url:"/NTES/add",
+                          type:'POST',
+                          data:{
+                                location:loc,
+                                goodsname: goodsname,
+                                summary: summary,
+                                info: info,
+                                price: price,
+                            },
+                            success:function(data){
+                               localStorage.setItem("id",data);
+                                localStorage.setItem("info","发布成功");
+                                window.location.href="/NTES/success.html";
+                            }
+                        })
+                    }else {
+                        $.ajax({
+                            url:"/NTES/edit",
+                            type:'POST',
+                            data:{
+                                id:$("#goodsid").val(),
+                                location:loc,
+                                goodsname: goodsname,
+                                summary: summary,
+                                info: info,
+                                price: price,
+                                _method:"PUT",
+                            },
+                            success:function(data){
+                                localStorage.setItem("id",data);
+                                localStorage.setItem("info","编辑成功");
+                                window.location.href="/NTES/success.html";
+                            }
+                        })
+                    }
+                } else {
+                    return;
+                }
+            });
+            [goodsname,summary,image,info,price].forEach(function(item){
                 item.addEventListener('input',function(e){
                     item.classList.remove('z-err');
                 }.bind(this),false);
             }.bind(this));
-            image.addEventListener('input',function(e){
-                var value = image.value.trim();
-                if(value != ''){
-                    imgpre.src = value;
-                }
-            }.bind(this),false);
-        },
-
-        check:function(){
-            var result = true;
-            [
-                [title,function(value){return value.length<2 || value.length>80}],
-                [summary,function(value){return value.length<2 || value.length>140}],
-                [image,function(value){return imageMode == "urlUpload" && value == ''}],
-                [detail,function(value){return value.length<2 || value.length>1000}],
-                [price,function(value){return value == '' || !Number(value)}]
-            ].forEach(function(item){
-                var value = item[0].value.trim();
-                if(item[1](value)){
-                    item[0].classList.add('z-err');
+            function check(){
+                var result = true;
+                [
+                    [goodsname,function(value){return value.length<2 || value.length>80}],
+                    [summary,function(value){return value.length<2 || value.length>140}],
+                    [image,function(value){return imageMode == "urlUpload" && value == ''}],
+                    [info,function(value){return value.length<2 || value.length>1000}],
+                    [price,function(value){return value == '' || !Number(value)}]
+                ].forEach(function(item){
+                    alert(item[0].value);
+                    var value = item[0].value.trim();
+                    if(item[1](value)){
+                        item[0].classList.add('z-err');
+                        result = false;
+                    }
+                    item[0].value = value;
+                });
+                if(imageMode == "fileUpload" && imageUrl == ''){
+                    uploadInput.classList.add('z-err');
                     result = false;
                 }
-                item[0].value = value;
-            });
-            if(imageMode == "fileUpload" && !imageUrl){
-                uploadInput.classList.add('z-err');
-                result = false;
+                return result;
             }
-            return result;
         }
     };
     page.init();

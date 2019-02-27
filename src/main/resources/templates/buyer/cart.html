@@ -71,47 +71,12 @@
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/settleAccount.js}" ></script>
+
 <!-- Icons -->
 <script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
 <script>
     feather.replace()
 </script>
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $.ajax({
-            url:'/NTES/ShowCart',
-            type:'GET',
-            datatype:'JSON',
-            success:function(data){
-                var arr = data.products;
-                var str = "<tr>" +
-                    "<th>" + '内容名称'  + "</th>"+
-                    "<th>" + '数量' + "</th>" +
-                    "<th>" + '价格' + "</th>" +
-                    "</tr>";
-                for(var i = 0; i < arr.length; i++){
-                    str = str +
-                        "<tr>" +
-                        "<td>" + arr[i].goodsname  + "</td>"+
-                        "<td>" +
-                        "<span class=\"lessNum\">"+ "-" + "</span>" +
-                        "<span class=\"totalNum\" id=\"allNum\">" + arr[i].goodsnum + "</span>" +
-                        "<span id=\"thisId\">" + arr[i].goodsid + "</span>" +
-                        "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
-                        "<td>" + arr[i].goodsprice + "</td>" +
-                        "</tr>";
-                }
-                $("#newTable").append(str);
-            },
-            error:function(err){
-                alert('发生了错误：'+err);
-                console.log(err);
-            }
-        })
-    })
-</script>
-
 </body>
 
 </html>

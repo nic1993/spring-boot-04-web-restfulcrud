@@ -85,10 +85,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-
         $.ajax({
-            url:'../goods/seller',
+            url:'/NTES/seller/goods',
             type:'GET',
             datatype:'JSON',
             success:function(data){
@@ -100,7 +98,7 @@
                     $("#plist").append('<li id="p-4">\n' +
                         '<a href='+id+' class=\"link\">\n' +
                         "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
-                        "<h3>"+arr[i].lastName+"</h3>\n" +
+                        "<h3>"+arr[i].goodsname+"</h3>\n" +
                         "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
                         "<span class=\"had\"><b>已售出" +num + "件</b></span>\n"+
                         "</a></li>")

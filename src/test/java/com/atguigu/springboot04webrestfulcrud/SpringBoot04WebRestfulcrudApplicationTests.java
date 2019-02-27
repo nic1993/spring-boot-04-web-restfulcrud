@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,7 +38,6 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 	@Autowired
 	GoodsMapper goodsMapper;
 
-
     @Autowired
 	FinanceMapper financeMapper;
 
@@ -49,10 +49,16 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Buyer buyer =  loginmapper.getBuyerByName("buyer");
-		System.out.println(buyer.getName() + " " + buyer.getPassword());
-	}
+		Goods goods = new Goods();
+		goods.setSellername("seller");
+		goods.setGoodsname("123");
+		goods.setInfo("123");
+		goods.setLocation("123");
+		goods.setPrice(123);
+		goods.setSummary("123");
+		goodService.addGoods(goods);
 
+	}
 
 	@Test
 	public  void test(){
@@ -77,8 +83,6 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 	@Test
 	public void testftp()
 	{
-
-
 		FTPClient ftp = new FTPClient();
 		try {
 			int reply;
@@ -94,7 +98,6 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 			File file = ResourceUtils.getFile("classpath:static/asserts/img/2018.jpg");
 			FileInputStream input = new FileInputStream(file);
 
-
 			System.out.println(ftp.changeWorkingDirectory("/home/images"));
 			ftp.enterLocalPassiveMode();
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
@@ -102,30 +105,28 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
 			System.out.println(ftp.storeFile("2018.jpg",input));
 			input.close();
 
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-
 	}
-
 
 	@Test
 	public void testconsumer(){
-		List<CartGoods> goods = shoppingCartMapper.getCartGoodsList("buyer");
-		System.out.println(goods.size());
-
+		List<GoodsDto> goods = shoppingCartMapper.getCartGoodsList("buyer");
+		for(GoodsDto dto : goods){
+			dto.setBuyerid(1);
+			dto.setBuyername("buyer");
+			dto.setTime(new Date());
+		}
+		Integer rows = financeMapper.insertFinance(goods);
+		System.out.println(rows);
 	}
 
     @Test
 	public void TestGoodService(){
-		List<Goods> lists = financeMapper.getGoodsByBuyer("buyer");
-
-		for(Goods dto : lists){
-			System.out.println(dto.getGoodsname());
-		}
+		Integer row = shoppingCartMapper.updateCartGoodsNum(5, 4, "buyer");
+		System.out.println(row);
 	}
 
 	@Test

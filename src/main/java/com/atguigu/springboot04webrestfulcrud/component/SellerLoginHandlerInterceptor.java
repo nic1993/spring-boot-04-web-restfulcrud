@@ -10,14 +10,13 @@ import javax.servlet.http.HttpServletResponse;
  * 登陆检查
  */
 
-public class LoginHandlerInterceptor implements HandlerInterceptor {
+public class SellerLoginHandlerInterceptor implements HandlerInterceptor {
     //目标方法执行之前
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       Object user = request.getSession().getAttribute("loginUser");
+       Object user = request.getSession().getAttribute("seller");
        if(user == null){
-           request.setAttribute("msg","没有权限，请先登陆");
-           request.getRequestDispatcher("/login.html").forward(request,response);
+           request.getRequestDispatcher("/login").forward(request,response);
            return  false;
        }
        else{
