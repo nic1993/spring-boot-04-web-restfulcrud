@@ -53,8 +53,8 @@
 		<div class="img"><img src="" th:src="${goods.getLocation()}" alt="" ></div>
 		<input type="hidden"  id="input" th:value="${goods.id}">
 		<div class="cnt">
-			<h2>SICP</h2>
-			<p class="summary" th:text="${goods.getGoodsname()}">测试书籍</p>
+			<h2 th:text="${goods.getGoodsname()}">SICP</h2>
+			<p class="summary" th:text="${goods.getSummary()}">测试书籍</p>
 			<div class="price">
 				<span class="v-unit">¥</span><span class="v-value" th:text="${goods.getPrice()}">120.88</span>
 			</div>
@@ -69,29 +69,18 @@
 <div class="m-tab m-tab-fw m-tab-simple f-cb">
 	<h2>详细信息</h2>
 </div>
-<div class="n-detail" th:text="${goods.getSellername()}">
+<div class="n-detail" th:text="${goods.getInfo()}">
 	好书
 </div>
 			</main>
 </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
-<script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/pageShow.js}" ></script>
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
-<script>
-    feather.replace()
-</script>
 
-<!-- Graphs -->
-<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
 
 </body>
 

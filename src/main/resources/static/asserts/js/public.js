@@ -1,104 +1,24 @@
 (function(w,d,u){
-    var btn_save = $("#savebtn");
-    var loading = new Loading();
-    var imageMode = "urlUpload";
+
     var form = util.get('form');
     if(!form){
         return;
     }
 
-    var id = form['goodsid'];
+
+    var layer = new Layer();
+    var loading = new Loading();
+
     var goodsname = form['goodsname'];
     var summary = form['summary'];
     var image = form['location'];
     var info = form['goodsinfo'];
     var price = form['goodsprice'];
     var uploadInput = form['file'];
-    var isSubmiting = false;
-    var imgpre = util.get('imgpre');
-    var loading = new Loading();
-    var imageUrl;
+    var imageUrl='';
     var imageMode = "urlUpload";
     var page = {
         init:function() {
-            // var $ = function (id) {
-            //     return document.getElementById(id);
-            // };
-
-            // $('uploadType').onclick = function (e) {
-            //     e = window.event || e;
-            //     o = e.srcElement || e.target;
-            //     if (o.nodeName === "INPUT") {
-            //         var s, h;
-            //         o.value === 'url' ? (s = 'urlUpload', h = 'fileUpload') : (s = 'fileUpload', h = 'urlUpload');
-            //         imageMode = o.value === 'url' ? "urlUpload" : "fileUpload";
-            //         image.classList.remove("z-err");
-            //         uploadInput.classList.remove("z-err");
-            //         $(s).style.display = 'block';
-            //         $(h).style.display = 'none';
-            //     }
-            // };
-
-            // $("upload").addEventListener('click', function (){
-            //
-            //
-            //     uploadInput.addEventListener('change', function() {
-            //         console.log(uploadInput.files) // File listing!
-            //     });
-            //
-            //     for (var i = 0, fileCount = uploadInput.files.length; i < fileCount; i++) {
-            //         console.log(uploadInput.files[i]);
-            //     }
-            //
-            //     var maxAllowedSize = 1000000;
-            //
-            //     var file = uploadInput.files[0];
-            //
-            //     if(uploadInput.files[0].size > maxAllowedSize) {
-            //         alert("超过文件上传大小限制");
-            //     }else{
-            //         var form = new FormData();
-            //         form.append('file', file, file.name);
-            //         form.enctype = "multipart/form-data";
-            //
-            //         var xhr = new XMLHttpRequest();
-            //         xhr.open("post", "/api/upload", true);
-            //         xhr.onload = function () {
-            //             if (xhr.status === 200) {
-            //                 alert("文件上传成功");
-            //                 var o = JSON.parse(xhr.responseText);
-            //                 imageUrl = o && o.result;
-            //                 image.value = imageUrl;
-            //                 imgpre.src = imageUrl;
-            //             } else {
-            //                 alert('An error occurred!');
-            //             }
-            //         };
-            //         xhr.send(form);
-            //     }
-            // });
-
-
-            //     form.addEventListener('click',function(e){
-            //         if(!isSubmiting && this.check()){
-            //             price.value = Number(price.value);
-            //             isSubmiting = true;
-            //             form.submit();
-            //         }
-            //     }.bind(this),false);
-            //     [title,summary,image,detail,price].forEach(function(item){
-            //         console.log(item);
-            //         item.addEventListener('input',function(e){
-            //             item.classList.remove('z-err');
-            //         }.bind(this),false);
-            //     }.bind(this));
-            //     image.addEventListener('input',function(e){
-            //         var value = image.value.trim();
-            //         if(value != ''){
-            //             imgpre.src = value;
-            //         }
-            //     }.bind(this),false);
-            // },
 
             $(".radioItem").change(
                 function() {
@@ -106,49 +26,71 @@
                     if (value == "file") {
                         $("#urlUpload").hide();
                         $("#fileUpload").show();
+                        imageMode = "fileUpload";
                     } else {
                         $("#urlUpload").show();
                         $("#fileUpload").hide();
+                        imageMode= "urlUpload";
                     }
                 });
+
 
             $("#upload").click(function () {
-                var file = $("#fileUp").get(0).files[0];
-                var formData = new FormData();
-                formData.append("file",file);
-                $.ajax({
-                    url:'/NTES/edit',
-                    type:'POST',
-                    data:formData,
-                    datatype:'JSON',
-                    processData:false,
-                    contentType: false,
-                    success:function(data){
-                        alert(data.imgpath)
-                        $("#imgpre").attr("src",data.imgpath);
-                        imageUrl = data.imgpath;
-                    }
-                });
-            })
+
+                layer.reset({
+                    content:'是否上传本地图片？',
+                    onconfirm:function(){
+                        layer.hide();
+                        loading.show();
+                        var maxAllowedSize = 100000;
+                        var file = $("#fileUp").get(0).files[0];
+                        console.log(file==null);
+                        if(file == null){
+                            loading.result('文件为空!');
+                        }else if(file.size > maxAllowedSize){
+                            loading.show();
+                            loading.result('超过文件上传大小限制');
+                        } else {
+                            var formData = new FormData();
+                            formData.append("file",file);
+                            $.ajax({
+                                url: '/NTES/edit',
+                                type: 'POST',
+                                data: formData,
+                                datatype: 'JSON',
+                                processData: false,
+                                contentType: false,
+                                success: function (data) {
+                                    $("#imgpre").attr("src", data.imgpath);
+                                    imageUrl = data.imgpath;
+                                    loading.result('上传成功');
+                                },
+                                error: function (err) {
+                                    loading.result('上传失败');
+                                }
+                            });
+                        }
+                    }.bind(this)
+                }).show();
+        })
+
 
             $("#savebtn").click(function () {
-                var loc = "";
-                var value = $("input[name='pic']:checked").val();
-                if (value == "file") {
-                    loc = $("#imgpre")[0].src;
-                    imageMode = "fileUpload";
-                } else {
-                    loc = $("#location").val();
-                    imageMode= "urlUpload";
-                }
 
-                var goodsname = $("#goodsname").val();
-                var summary = $("#summary").val();
-                var info = $("#goodsinfo").val();
-                var price = $("#goodsprice").val();
+
+                // var goodsname = $("#goodsname").val();
+                // var summary = $("#summary").val();
+                // var info = $("#goodsinfo").val();
+                // var price = $("#goodsprice").val();
                 if (check()) {
+                    var loc = "";
+                    var value = $("input[name='pic']:checked").val();
+                    if (value == "file") {
+                        loc = imageUrl;
+                    } else {
+                        loc = image;
+                    }
                     var btn = $("#savebtn").text();
-                    alert(btn);
                     if(btn == "发布"){
                         $.ajax({
                           url:"/NTES/add",
@@ -204,7 +146,6 @@
                     [info,function(value){return value.length<2 || value.length>1000}],
                     [price,function(value){return value == '' || !Number(value)}]
                 ].forEach(function(item){
-                    alert(item[0].value);
                     var value = item[0].value.trim();
                     if(item[1](value)){
                         item[0].classList.add('z-err');

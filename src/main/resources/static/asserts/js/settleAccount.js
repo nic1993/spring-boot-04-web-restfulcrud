@@ -1,6 +1,5 @@
 (function(w,d,u){
     var products;
-
     $.ajax({
         url:'/NTES/ShowCart',
         type:'GET',
@@ -42,7 +41,6 @@
                 var id = target.parentElement.children[2].textContent;
                 num ++;
                 target.parentElement.children[1].textContent = num;
-                alert(num)
                 $.ajax({
                     url:'/NTES/UpdateCart',
                     type:'POST',
@@ -95,79 +93,32 @@
     var loading = new Loading();
     var layer = new Layer();
     
-    
     $("#Account").click(function () {
                 layer.reset({
                     content:'确认购买吗？',
                     onconfirm:function(){
                         layer.hide();
                         loading.show();
-                        ajax({
+                        $.ajax({
                             url:'/NTES/AddFinance',
                             type:'POST',
                             datatype:'JSON',
                             success:function(data){
-
+                                if(data.code == 1){
+                                    loading.result(data.info);
+                                }else {
+                                    loading.result(data.info);
+                                    window.location.href="/NTES/buyer/finance.html"
+                                }
                             }
                         })
                     }.bind(this)
                 }).show();
                 return;
     })
-    
-    // $('Account').onclick = function(e){
-    //     // var newProducts = products.map(function(arr){
-    //     //     return {'id':arr.id,'number':arr.num};
-    //     // });newProducts
-    //     console.log(newProducts);
-    //     var ele = e.target;
-    //     layer.reset({
-    //         content:'确认购买吗？',
-    //         onconfirm:function(){
-    //             layer.hide();
-    //             loading.show();
-    //
-    //             var xhr = new XMLHttpRequest();
-    //             var data = JSON.stringify(newProducts);
-    //             xhr.onreadystatechange = function(){
-    //                 if(xhr.readyState == 4){
-    //                     var status = xhr.status;
-    //                     if(status >= 200 && status < 300 || status == 304){
-    //                         var json = JSON.parse(xhr.responseText);
-    //                         if(json && json.code == 200){
-    //                             loading.result('购买成功',function(){location.href = './account.html';});
-    //                             util.deleteCookie(name);
-    //                         }else{
-    //                             alert(json.message);
-    //                         }
-    //                     }else{
-    //                         loading.result(message||'购买失败');
-    //                     }
-    //                 }
-    //             };
-    //             xhr.open('post','/api/buy');
-    //             xhr.setRequestHeader('Content-Type','application/json');
-    //             xhr.send(data);
-    //         }.bind(this)
-    //     }).show();
-    //     return;
-    // };
-    // $('back').onclick = function(){
-    //     location.href = window.history.back();
-    // }
-})(window,document)
-function plusNum(e) {
-    var num = $('#allNum').text();
-    if(num > 1){
-        num --;
-        $('#allNum').text(num);
-    }else{
-        alert("您没有购买任何商品");
-    }
-}
 
-function addNum(e) {
-    var num = $('#allNum').text();
-    num ++;
-    $('#allNum').text(num);
-};
+    $("#back").click(function () {
+        window.history.go(-1);
+    })
+
+})(window,document)

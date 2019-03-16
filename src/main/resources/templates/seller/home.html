@@ -46,7 +46,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="commons/sellerbar::#sidebar(activeUri='/seller/home.html')"></div>
+        <div th:replace="commons/sellerbar::#sidebar"></div>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="sellerhome">
             <div class="g-doc">
@@ -63,24 +63,15 @@
                     </ul>
                 </div>
             </div>
-
         </main>
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+
 <script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
-<script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 <script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
-
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
-<script>
-    feather.replace()
-</script>
-
+<script type="text/javascript"  th:src="@{/asserts/js/global.js}" ></script>
+<script type="text/javascript"  th:src="@{/asserts/js/pageIndex.js}" ></script>
 
 <script type="text/javascript">
 
@@ -92,16 +83,23 @@
             success:function(data){
                 var arr = data.allgoods;
                 for(var i = 0;i < arr.length;i++){
-                    var id = "/NTES/seller/detail/" + arr[i].id;
+                    var id = arr[i].id;
+                    var li_id = "p-" +id;
+                    var src = "/NTES/seller/detail/" + id;
                     var num = arr[i].sellnums;
                     var loc = arr[i].location;
-                    $("#plist").append('<li id="p-4">\n' +
-                        '<a href='+id+' class=\"link\">\n' +
+                    var basics ='<li id=' + li_id + '>\n' +
+                        '<a href='+src+' class=\"link\">\n' +
                         "<div class=\"img\"><img src="+loc+" alt=\"SICP\"></div>\n" +
                         "<h3>"+arr[i].goodsname+"</h3>\n" +
-                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>\n" +
-                        "<span class=\"had\"><b>已售出" +num + "件</b></span>\n"+
-                        "</a></li>")
+                        "<div class=\"price\"><span class=\"v-unit\">¥</span><span class=\"v-value\">" +arr[i].price+"</span></div>";
+                    if(num == 0){
+                        var del=basics + "</a><span class=\"u-btn u-btn-normal u-btn-xs del\"  id=\"Del\" data-awardid=" + id +">删除</span></li>"
+                        $("#plist").append(del);
+                    }else {
+                        var shownum=basics + "<span class=\"had\"><b>已售出</b></span></a></li>";
+                        $("#plist").append(shownum);
+                    }
                 }
             },
             error:function(err){

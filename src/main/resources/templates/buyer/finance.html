@@ -54,10 +54,7 @@
                     <h2>已购买的内容</h2>
                 </div>
                 <table id="newTable" class="m-table m-table-row n-table g-b3">
-                    <colgroup><col class="img"/><col/><col class="time"/><col/><col class="num"/><col/><col class="price"/><col/></colgroup>
-                    <thead>
-                    <tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th></tr>
-                    </thead>
+
                 </table>
             </div>
 
@@ -87,7 +84,10 @@
             datatype:'JSON',
             success:function(data){
                 var arr = data.products;
-                var str = "";
+                var str = "<colgroup><col class=\"img\"/><col/><col class=\"time\"/><col/><col class=\"num\"/><col/><col class=\"price\"/><col/></colgroup>\n" +
+                    "<thead>\n" +
+                    "<tr><th>内容图片</th><th>内容名称</th><th>购买时间</th><th>购买数量</th><th>购买价格</th></tr>\n" +
+                    "</thead><tbody>";
                 for(var i = 0; i < arr.length; i++){
                     var loc = "/NTES/buyer/detail/" + arr[i].goodsid;
                     var src = arr[i].location;
@@ -98,9 +98,15 @@
                         "<td><span class=\"v-time\">"+ arr[i].time + "</span></td>" +
                         "<td><span class=\"v-num\">" + arr[i].goodsnum + "</span></td>>" +
                         "<td><span id=\"v-unit\">¥</span><span class=\"value\">" + arr[i].price + "</span></td>" +
-                        "<span class=\"moreNum\">"+ "+" + "</span>" + "</td>" +
                         "</tr>";
                 }
+                str = str  +
+                    "</tbody><tfoot>\n" +
+                    " <tr>\n" +
+                    "<td colspan=\"4\"><div class=\"total\">总计：</div></td>\n" +
+                    "<td><span class=\"v-unit\">¥</span><span class=\"value\">"+data.sum+"</span></td>\n" +
+                    "</tr>\n" +
+                    "</tfoot>"
                 $("#newTable").append(str);
             },
             error:function(err){

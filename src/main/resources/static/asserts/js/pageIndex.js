@@ -3,15 +3,17 @@
     if(!plist){
         return;
     }
+
     var layer = new Layer();
     var loading = new Loading();
     var page = {
         init:function(){
             plist.addEventListener('click',function(e){
                 var ele = e.target;
-                var delId = ele.dataset && ele.dataset.del;
+                var delId = ele.dataset && ele.classList.contains('del');
                 if(delId){
-                    this.ondel(delId);
+                    var delid = ele.dataset.awardid;
+                    this.ondel(delid);
                     return;
                 }
             }.bind(this),false);
@@ -22,9 +24,13 @@
                 onconfirm:function(){
                     layer.hide();
                     loading.show();
-                    ajax({
-                        url:'/api/delete',
-                        data:{id:id},
+                    $.ajax({
+                        url:'/NTES/del',
+                        type:"POST",
+                        data:{
+                            id:id,
+                            _method:"delete",
+                        },
                         success:function(json){
                             this.delItemNode(id);
                             loading.result('删除成功');

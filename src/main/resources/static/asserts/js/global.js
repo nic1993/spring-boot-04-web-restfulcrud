@@ -1,7 +1,4 @@
 (function(w,d,u){
-
-
-
     var f = function(){};
 
     var formatParams =function(data) {

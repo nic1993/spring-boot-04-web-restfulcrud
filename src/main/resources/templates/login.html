@@ -11,86 +11,79 @@
 		<!-- Custom styles for this template -->
 		<link href="asserts/css/signin.css"  th:href="@{/asserts/css/signin.css}"  rel="stylesheet">
 		<link href="asserts/css/style.css"  th:href="@{/asserts/css/style.css}"  rel="stylesheet">
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
 	</head>
+	<style>
+		.newstyle{
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 47px;
+			width: 100%;
+			font-size: 1rem;
+		}
+		.g-doc{
+			position: fixed;
+			top: 40px;
+			left: 0;
+			width: 100%;
+		}
+		.chooseLogin{
+			width: 300px;
+			position: relative;
+			top: 25%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			/*background: #fff;*/
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			padding: 10px 10px 4px 10px;
+			border-radius: 10px;
+			font-size: 18px;
+			margin-top: 60px;
+			/*box-shadow: 0 2px 5px rgba(0,0,0,0.2);*/
+			cursor: pointer;
+		}
+		.choose_txt{
+			padding-bottom: 5px;
+			width: 50%;
+			text-align: center;
+		}
+		.choose_txt:hover{
+			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+			background: #fff;
+		}
+		.choose_txtChange{
+			border-bottom: 1px solid lightskyblue;
+		}
+	</style>
 
-	<body class="text-center">
+	<body >
 	<div th:replace="commons/bar::topbar"></div>
-	<div class="g-doc">
+
+	<div class="g-doc text-center" >
+		<div class="chooseLogin">
+			<h1 id="buyer" class="choose_txt choose_txtChange">买家登陆</h1>
+			<h1 id="seller" class="choose_txt slideInDown">卖家登陆</h1>
+		</div>
 		<form class="form-signin" id="loginform"  method="post" >
 			<img class="mb-4" th:src="@{/asserts/img/bootstrap-solid.svg}" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">
-			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
+			<h1 class="h3 mb-3 font-weight-normal">请登陆</h1>
 			<p  style="color: red" id="errormsg" ></p>
-			<label class="sr-only" th:text="#{login.username}">Username</label>
-			<input type="text" name="username" class="form-control" id="nameInput" placeholder="Username" required="" autofocus="" >
-			<label class="sr-only" th:text="#{login.password}">Password</label>
-			<input type="password" name="password" class="form-control" id="pwdInput" placeholder="Password" required="">
+			<label class="sr-only">用户名</label>
+			<input type="text" name="username" class="form-control" id="nameInput" placeholder="用户名" required="" autofocus="" >
+			<label class="sr-only">密码</label>
+			<input type="password" name="password" class="form-control" id="pwdInput" placeholder="密码" required="">
 			<div class="checkbox mb-3">
-				<label>
-            <input type="checkbox" value="remember-me" > [[#{login.remember}]]
-			</label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" id="buyerbtn" type="button" th:text="#{login.buyerbtn}">Sign in</button>
-			<button class="btn btn-lg btn-primary btn-block" id="sellerbtn" type="button" th:attr="seller_uri=@{/goods}" th:text="#{login.sellerbtn}">Sign in</button>
-			<p class="mt-5 mb-3 text-muted">© 2017-2018</p>
-			<a class="btn btn-sm" th:href="@{/login.html(l='zh_CN')}">中文</a>
-			<a class="btn btn-sm" th:href="@{/login.html(l='en_US')}">English</a>
+			<button class="btn btn-lg btn-primary btn-block" id="loginbtn" type="button" >买家登陆</button>
 		</form>
 	</div>
 
 	</body>
 	<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
+	<script type="text/javascript"  th:src="@{/asserts/js/md5.js}" ></script>
+	<script type="text/javascript"  th:src="@{/asserts/js/pageLogin.js}" ></script>
 
-	<script type="text/javascript">
-        $("#sellerbtn").click(function () {
-            $.ajax({
-				url:'/NTES/seller/login',
-                type:'POST',
-                datatype:'JSON',
-                data:{
-                    username:$('#nameInput').val(),
-                    password:$('#pwdInput').val(),
-                },
-				success:function (data) {
-				    if(data.seller != null){
-                        sessionStorage.setItem('seller',data.seller);
-                        window.location.href="/NTES/seller.html";
-					} else if(data.loginStatusCode==3){
-                        $("#errormsg").html("用户名不存在！");
-					}else {
-                        $("#errormsg").html("密码错误！");
-					}
-                },
-                error:function(err){
-                    alert('发生了错误：'+err.status);
-                    console.log(err);
-                }
-			});
-        });
-
-        $("#buyerbtn").click(function () {
-            $.ajax({
-                url:'/NTES/buyer/login',
-                type:'POST',
-                datatype:'JSON',
-                data:{
-                    username:$('#nameInput').val(),
-                    password:$('#pwdInput').val(),
-                },
-                success:function (data) {
-                    if(data.buyer != null){
-                        sessionStorage.setItem('buyer',data.buyer);
-                        window.location.href="/NTES/buyer.html";
-                    } else if(data.loginStatusCode==3){
-                        $("#errormsg").html("用户名不存在！");
-                    }else {
-                        $("#errormsg").html("密码错误！");
-                    }
-                },
-                error:function(err){
-                    alert('发生了错误：'+err.status);
-                    console.log(err);
-                }
-            });
-        });
-	</script>
 </html>

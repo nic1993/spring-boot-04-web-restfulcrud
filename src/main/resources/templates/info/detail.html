@@ -33,8 +33,7 @@
 					opacity: 1
 				}
 			}
-			
-			.chartjs-render-monitor {
+
 				-webkit-animation: chartjs-render-animation 0.001s;
 				animation: chartjs-render-animation 0.001s;
 			}
@@ -42,26 +41,24 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
-			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{../}">HOME</a>
-			<!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
-			<ul class="navbar-nav px-3">
-				<li class="nav-item text-nowrap">
-					<a class="nav-link" href="/" th:href="@{../login}">Sign in</a>
-				</li>
-			</ul>
-		</nav>
-
+		<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">-->
+			<!--<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" th:href="@{../}">HOME</a>-->
+			<!--<ul class="navbar-nav px-3">-->
+				<!--<li class="nav-item text-nowrap">-->
+					<!--<a class="nav-link" href="/" th:href="@{../login}">Sign in</a>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</nav>-->
+		<div th:replace="commons/bar::topbar"></div>
 		</div><div class="g-doc">
 			<div class="n-show f-cb" id="showContent">
 				<div class="img"><img src="" th:src="${goods.getLocation()}" alt="" ></div>
 				<div class="cnt">
-					<h2>SICP</h2>
-					<p class="summary" th:text="${goods.getGoodsname()}">测试书籍</p>
+					<h2 th:text="${goods.getGoodsname()}">SICP</h2>
+					<p class="summary" th:text="${goods.getSummary()}">测试书籍</p>
 					<div class="price">
 						<span class="v-unit">¥</span><span class="v-value" th:text="${goods.getPrice()}">120.88</span>
 					</div>
-					<!--<div class="num">购买数量：<span id="plusNum" class="lessNum"><a>-</a></span><span class="totalNum" id="allNum"></span><span id="addNum" class="moreNum"><a>+</a></span></div>-->
 					<div class="oprt f-cb">
 					</div>
 				</div>
@@ -69,30 +66,13 @@
 			<div class="m-tab m-tab-fw m-tab-simple f-cb">
 				<h2>详细信息</h2>
 			</div>
-			<div class="n-detail" th:text="${goods.getSellername()}">
+			<div class="n-detail" th:text="${goods.getInfo()}">
 				好书
 			</div>
 		</div>
-
-
 		</div>
-
-		<!-- Bootstrap core JavaScript
-    ================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
 		<script type="text/javascript"  th:src="@{/asserts/js/jquery-1.11.0.min.js}" ></script>
-		<script type="text/javascript"  th:src="@{/asserts/js/popper.min.js}" ></script>
 		<script type="text/javascript"  th:src="@{/asserts/js/bootstrap.min.js}" ></script>
-
-		<!-- Icons -->
-		<script type="text/javascript" th:src="@{/asserts/js/feather.min.js}" ></script>
-		<script>
-			feather.replace()
-		</script>
-
-		<!-- Graphs -->
-		<script type="text/javascript" th:src="@{/asserts/js/Chart.min.js}"  ></script>
-
 	</body>
 
 </html>
