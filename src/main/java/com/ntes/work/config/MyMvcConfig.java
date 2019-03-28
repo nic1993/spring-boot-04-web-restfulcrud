@@ -27,14 +27,13 @@ public class MyMvcConfig implements WebMvcConfigurer {
             public void addViewControllers(ViewControllerRegistry registry) {
                 registry.addViewController("/").setViewName("index");
                 registry.addViewController("/login").setViewName("login");
-                registry.addViewController("/seller.html").setViewName("/seller/home");
-                registry.addViewController("/seller/home.html").setViewName("/seller/home");
-                registry.addViewController("/info/edit.html").setViewName("/info/edit");
-                registry.addViewController("/success.html").setViewName("/info/success");
-                registry.addViewController("/buyer.html").setViewName("/buyer/home.html");
-                registry.addViewController("/buyer/home.html").setViewName("/buyer/home");
-                registry.addViewController("/buyer/cart.html").setViewName("/buyer/cart");
-                registry.addViewController("/buyer/finance.html").setViewName("/buyer/finance");
+                registry.addViewController("/seller.html").setViewName("seller/home");
+                registry.addViewController("/info/edit.html").setViewName("info/edit");
+                registry.addViewController("/success.html").setViewName("info/success");
+                registry.addViewController("/buyer.html").setViewName("buyer/home");
+//                registry.addViewController("/buyer/home.html").setViewName("/buyer/home");
+                registry.addViewController("/buyer/cart.html").setViewName("buyer/cart");
+                registry.addViewController("/buyer/finance.html").setViewName("buyer/finance");
             }
 
             //注册拦截器

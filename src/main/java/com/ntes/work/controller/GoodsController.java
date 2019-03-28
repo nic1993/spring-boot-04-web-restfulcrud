@@ -86,7 +86,6 @@ public class GoodsController {
     public Map getGoodsForEdit(@RequestParam(value = "file",required = false) MultipartFile file){
         HashMap map = new HashMap();
         FileUtils.upload(file,file.getOriginalFilename(),map);
-        System.out.println(map.get("msg"));
         return  map;
     }
 

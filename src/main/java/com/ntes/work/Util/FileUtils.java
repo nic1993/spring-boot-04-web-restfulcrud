@@ -2,8 +2,10 @@ package com.ntes.work.Util;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.crypto.Cipher;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;

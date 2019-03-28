@@ -66,48 +66,48 @@ public class SpringBoot04WebRestfulcrudApplicationTests {
         }
 	}
 
-	@Test
-	public void testftp()
-	{
-		FTPClient ftp = new FTPClient();
-		try {
-			int reply;
-			ftp.connect("101.132.149.10", 21);
-			ftp.login("ftpuser","cyk688388");
-			reply = ftp.getReplyCode();
+//	@Test
+//	public void testftp()
+//	{
+//		FTPClient ftp = new FTPClient();
+//		try {
+//			int reply;
+//			ftp.connect("101.132.149.10", 21);
+//			ftp.login("ftpuser","cyk688388");
+//			reply = ftp.getReplyCode();
+//
+//			System.out.println("reply"+ reply);
+//			if(!FTPReply.isPositiveCompletion(reply)){
+//				ftp.disconnect();
+//			}
+//
+//			File file = ResourceUtils.getFile("classpath:static/asserts/img/2018.jpg");
+//			FileInputStream input = new FileInputStream(file);
+//
+//			System.out.println(ftp.changeWorkingDirectory("/home/images"));
+//			ftp.enterLocalPassiveMode();
+//			ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//
+//			System.out.println(ftp.storeFile("2018.jpg",input));
+//			input.close();
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
-			System.out.println("reply"+ reply);
-			if(!FTPReply.isPositiveCompletion(reply)){
-				ftp.disconnect();
-			}
-
-			File file = ResourceUtils.getFile("classpath:static/asserts/img/2018.jpg");
-			FileInputStream input = new FileInputStream(file);
-
-			System.out.println(ftp.changeWorkingDirectory("/home/images"));
-			ftp.enterLocalPassiveMode();
-			ftp.setFileType(FTP.BINARY_FILE_TYPE);
-
-			System.out.println(ftp.storeFile("2018.jpg",input));
-			input.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Test
-	public void testconsumer(){
-		List<GoodsDto> goods = shoppingCartMapper.getCartGoodsList("buyer");
-		for(GoodsDto dto : goods){
-			dto.setBuyerid(1);
-			dto.setBuyername("buyer");
-			dto.setTime(new Date());
-		}
-		Integer rows = financeMapper.insertFinance(goods);
-		System.out.println(rows);
-	}
+//	@Test
+//	public void testconsumer(){
+//		List<GoodsDto> goods = shoppingCartMapper.getCartGoodsList("buyer");
+//		for(GoodsDto dto : goods){
+//			dto.setBuyerid(1);
+//			dto.setBuyername("buyer");
+//			dto.setTime(new Date());
+//		}
+//		Integer rows = financeMapper.insertFinance(goods);
+//		System.out.println(rows);
+//	}
 
     @Test
 	public void TestGoodService(){

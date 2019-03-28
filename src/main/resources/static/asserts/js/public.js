@@ -44,31 +44,43 @@
                         loading.show();
                         var maxAllowedSize = 100000;
                         var file = $("#fileUp").get(0).files[0];
-                        console.log(file==null);
+
                         if(file == null){
-                            loading.result('文件为空!');
-                        }else if(file.size > maxAllowedSize){
                             loading.show();
-                            loading.result('超过文件上传大小限制');
-                        } else {
-                            var formData = new FormData();
-                            formData.append("file",file);
-                            $.ajax({
-                                url: '/NTES/edit',
-                                type: 'POST',
-                                data: formData,
-                                datatype: 'JSON',
-                                processData: false,
-                                contentType: false,
-                                success: function (data) {
-                                    $("#imgpre").attr("src", data.imgpath);
-                                    imageUrl = data.imgpath;
-                                    loading.result('上传成功');
-                                },
-                                error: function (err) {
-                                    loading.result('上传失败');
-                                }
-                            });
+                            loading.result('文件为空!');
+                        }
+                        else {
+                            var filename = file.name;
+                            var lastname = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+
+                           if(lastname !="jpg" && lastname !="jpeg"  && lastname !="png"&&lastname !="gif"&&lastname !="bmp"){
+                                loading.show();
+                                loading.result('请选择图片格式!');
+                            }
+                            else if(file.size > maxAllowedSize){
+                                loading.show();
+                                loading.result('超过文件上传大小限制');
+                            } else {
+                                var formData = new FormData();
+                                formData.append("file",file);
+                                $.ajax({
+                                    url: '/NTES/edit',
+                                    type: 'POST',
+                                    data: formData,
+                                    datatype: 'JSON',
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (data) {
+
+                                        $("#imgpre").attr("src", data.imgpath);
+                                        imageUrl = data.imgpath;
+                                        loading.result('上传成功');
+                                    },
+                                    error: function (err) {
+                                        loading.result('上传失败');
+                                    }
+                                });
+                            }
                         }
                     }.bind(this)
                 }).show();
@@ -76,21 +88,25 @@
 
 
             $("#savebtn").click(function () {
-
-
-                // var goodsname = $("#goodsname").val();
-                // var summary = $("#summary").val();
-                // var info = $("#goodsinfo").val();
-                // var price = $("#goodsprice").val();
+                var goodsname = $("#goodsname").val();
+                var summary = $("#summary").val();
+                var info = $("#goodsinfo").val();
+                var price = $("#goodsprice").val();
                 if (check()) {
                     var loc = "";
                     var value = $("input[name='pic']:checked").val();
+
                     if (value == "file") {
                         loc = imageUrl;
                     } else {
                         loc = image;
                     }
                     var btn = $("#savebtn").text();
+                    console.log("loc:" + loc);
+                    console.log("goodsname:" + goodsname);
+                    console.log("summary:" + summary);
+                    console.log("info:" + info);
+                    console.log("price:" + price);
                     if(btn == "发布"){
                         $.ajax({
                           url:"/NTES/add",

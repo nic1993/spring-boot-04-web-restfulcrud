@@ -118,6 +118,8 @@ public class ShoppingCartController {
             dto.setBuyername(buyer.getName());
             dto.setTime(new Date());
         }
+
+
         Integer integer = goodService.insertFinance(products);
 
         List<Goods> goods = goodService.getGoodsFromCart(buyer.getName());
@@ -134,8 +136,11 @@ public class ShoppingCartController {
         map.put("code",INSERT_FINANCE_SUCCESS);
         map.put("info",INSERT_FINANCE_SUCCESS_STR);
         }catch (Exception e){
+
+
             map.put("code",INSERT_FINANCE_FAIL);
             map.put("info",INSERT_FINANCE_FAIL_STR);
+
         }
         return map;
     }

@@ -20,7 +20,7 @@ public interface FinanceMapper {
 
     @Insert({
             "<script>",
-            "insert into finance(buyerid,buyername,goodsid,time,goodsnum,price)" ,
+            "insert ignore into finance(buyerid,buyername,goodsid,time,goodsnum,price)" ,
             " values ",
             "<foreach collection='goodsDtos' item='dto' index='key' separator=','>" ,
             "(#{dto.buyerid},#{dto.buyername},#{dto.goodsid},#{dto.time},#{dto.goodsnum},#{dto.price})" ,
