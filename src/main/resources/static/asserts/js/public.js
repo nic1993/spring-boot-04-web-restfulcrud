@@ -99,14 +99,9 @@
                     if (value == "file") {
                         loc = imageUrl;
                     } else {
-                        loc = image;
+                        loc = $("#location").val();
                     }
                     var btn = $("#savebtn").text();
-                    console.log("loc:" + loc);
-                    console.log("goodsname:" + goodsname);
-                    console.log("summary:" + summary);
-                    console.log("info:" + info);
-                    console.log("price:" + price);
                     if(btn == "发布"){
                         $.ajax({
                           url:"/NTES/add",
