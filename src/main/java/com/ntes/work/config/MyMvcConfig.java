@@ -39,12 +39,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
             //注册拦截器
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-
                 registry.addInterceptor(new BuyerLoginHandlerInterceptor()).addPathPatterns("/buyer","/buyer/lists","/buyer/detail/{id}","/buyer/finance","/buyer.html","/buyer/finance.html"
-                        ,"buyer/cart.html","/buyer/cart.html");
-                registry.addInterceptor(new SellerLoginHandlerInterceptor()).addPathPatterns("/goods/{name}","/seller/detail/{id}","/edit","/edit/{id}","/add","/seller.html",
+                        ,"buyer/cart.html");
+                registry.addInterceptor(new SellerLoginHandlerInterceptor()).addPathPatterns("/goods/{name}","/seller/detail/{id}","/edit/{id}","/seller.html",
                         "/info/edit.html");
-
                }
         };
         return  webMvcConfigurer;

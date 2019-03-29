@@ -71,10 +71,14 @@
                                     processData: false,
                                     contentType: false,
                                     success: function (data) {
-
-                                        $("#imgpre").attr("src", data.imgpath);
-                                        imageUrl = data.imgpath;
-                                        loading.result('上传成功');
+                                        if(data.status == 0){
+                                            alert("请重新登陆");
+                                            window.location.href="/NTES/login";
+                                        }else {
+                                            $("#imgpre").attr("src", data.imgpath);
+                                            imageUrl = data.imgpath;
+                                            loading.result('上传成功');
+                                        }
                                     },
                                     error: function (err) {
                                         loading.result('上传失败');
@@ -114,9 +118,15 @@
                                 price: price,
                             },
                             success:function(data){
-                               localStorage.setItem("id",data);
-                                localStorage.setItem("info","发布成功");
-                                window.location.href="/NTES/success.html";
+                              if(data == 0){
+                                  alert("请重新登陆");
+                                  window.location.href="/NTES/login";
+                              }else {
+                                  localStorage.setItem("id",data);
+                                  localStorage.setItem("info","发布成功");
+                                  window.location.href="/NTES/success.html";
+                              }
+
                             }
                         })
                     }else {
@@ -133,9 +143,15 @@
                                 _method:"PUT",
                             },
                             success:function(data){
-                                localStorage.setItem("id",data);
-                                localStorage.setItem("info","编辑成功");
-                                window.location.href="/NTES/success.html";
+                                if(data == 0){
+                                    alert("请重新登陆");
+                                    window.location.href="/NTES/login";
+                                }else {
+                                    localStorage.setItem("id",data);
+                                    localStorage.setItem("info","编辑成功");
+                                    window.location.href="/NTES/success.html";
+                                }
+
                             }
                         })
                     }

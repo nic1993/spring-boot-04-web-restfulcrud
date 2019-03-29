@@ -16,8 +16,9 @@ import java.util.Map;
  */
 public class FileUtils {
 
-    static int UPLOAD_STATUS_SUCCFESS = 1;
-    static int UPLOAD_STATUS_FAIL = 2;
+    public static int SELLER_IS_NULL = 0;
+    public static int UPLOAD_STATUS_SUCCFESS = 1;
+    public static int UPLOAD_STATUS_FAIL = 2;
 
     static  String SUCCFESS_MSG = "上传成功!";
     static  String FAIL_MSG = "上传失败!";
@@ -38,11 +39,13 @@ public class FileUtils {
             client.setFileType(FTP.BINARY_FILE_TYPE);
             client.storeFile(newname,input);
             input.close();
+            map.put("UPLOAD_STATUS_SUCCFESS",UPLOAD_STATUS_SUCCFESS);
             map.put("imgpath",FtpUtils.location + "/" + newname);
             map.put("msg",SUCCFESS_MSG);
             return  map;
         } catch (IOException e) {
             e.printStackTrace();
+            map.put("status",UPLOAD_STATUS_FAIL);
             map.put("msg",FAIL_MSG);
             return map;
         }

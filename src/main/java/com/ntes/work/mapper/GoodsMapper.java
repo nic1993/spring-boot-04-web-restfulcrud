@@ -24,7 +24,7 @@ public interface GoodsMapper {
     @Select("select * from goods where id=#{id}")
     public Goods getGoodsById(Integer id);
 
-    @Update("update goods set goodsname=#{goodsname},summary=#{summary},location=#{location},price=#{price} where id=#{id}")
+    @Update("update goods set goodsname=#{goodsname},summary=#{summary},location=#{location},price=#{price},info=#{info} where id=#{id}")
     public void updateGoods(Goods goods);
 
     @Update({

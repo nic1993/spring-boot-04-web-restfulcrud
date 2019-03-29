@@ -21,6 +21,7 @@ import java.util.Map;
 @Controller
 public class GoodsController {
 
+
     @Autowired
     GoodService goodService;
 
@@ -63,7 +64,11 @@ public class GoodsController {
 
     @ResponseBody
     @PutMapping("/edit")
-    public Integer updateGoodsById(Goods goods){
+    public Integer updateGoodsById(Goods goods,HttpSession session){
+        Seller seller = (Seller) session.getAttribute("seller");
+        if(seller == null){
+            return 0;
+        }
         goodService.updateGoodsById(goods);
         return goods.getId();
     }
@@ -83,16 +88,25 @@ public class GoodsController {
 
     @ResponseBody
     @PostMapping("/edit")
-    public Map getGoodsForEdit(@RequestParam(value = "file",required = false) MultipartFile file){
+    public Map getGoodsForEdit(@RequestParam(value = "file",required = false) MultipartFile file,HttpSession session){
         HashMap map = new HashMap();
-        FileUtils.upload(file,file.getOriginalFilename(),map);
+        Seller seller = (Seller) session.getAttribute("seller");
+        if(seller == null){
+             map.put("status",FileUtils.SELLER_IS_NULL);
+        }else {
+            FileUtils.upload(file,file.getOriginalFilename(),map);
+        }
         return  map;
     }
 
     @ResponseBody
     @PostMapping("/add")
     public Integer addGoods(Goods goods, HttpSession session){
-        String sellername = ((Seller) session.getAttribute("seller")).getName();
+        Seller seller = (Seller) session.getAttribute("seller");
+        if(seller == null){
+            return 0;
+        }
+        String sellername = seller.getName();
         goods.setSellername(sellername);
         goodService.addGoods(goods);
         return  goods.getId();
